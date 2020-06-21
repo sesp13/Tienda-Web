@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Rutas de Usuarios
+Route::get('/confirmar-contraseña/{token}',"UserController@confirm")->name('user.confirm');
+Route::get('/sin-confirmar', "UserController@unconfirmed")->name('user.unconfirmed');
