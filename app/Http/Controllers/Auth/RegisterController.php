@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ConfirmUserMessage;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -66,15 +68,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        return User::create([
+        //Creamos el token para recordar al usuario
+        $data['email_token'] = $this->generateToken();
+        
+        $user =  User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'nit' => $data['nit'],
-            'email_token' => $this->generateToken(),
+            'email_token' => $data['email_token'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        //Quitamos la contraseña del array de datos
+        unset($data['password']);
+        
+        //Envio del correo de confirmación
+        Mail::to($data['email'])->queue(new ConfirmUserMessage($data));
+
+        return $user;
 
     }
 

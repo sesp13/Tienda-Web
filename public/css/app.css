@@ -10928,3 +10928,9 @@ a.text-dark:focus {
   }
 }
 
+.admin-banner {
+  font-style: italic;
+  font-weight: bold;
+  color: #c01515;
+}
+
