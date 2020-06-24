@@ -7,6 +7,16 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+//Página home
+.web-title{
+    font-family: 'Nunito', 'sans-serif';
+    text-align: center;
+    font-size: 80px;
+    text-shadow: 3px 0px 1px gray;
+    background-color: white;
+    border-bottom: 2px solid #ccc;
+}
+
 .admin-banner{
     font-style: italic;
     font-weight: bold;

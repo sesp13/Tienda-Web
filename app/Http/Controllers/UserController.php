@@ -18,11 +18,16 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        //Saber si el usuario autenticado es admin o no
+        $admin = Auth::user()->role == "ROLE_ADMIN" ? true : false;
+
+        //Conseguir el usuario asociado con el id de la url
         $user = User::findOrFail($id);
 
         return view('user.edit', [
             'user' => $user,
-            'url' => 'user.update'
+            'url' => 'user.update',
+            'admin' => $admin
         ]);
     }
 
