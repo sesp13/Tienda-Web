@@ -93,6 +93,10 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="bg-white text-center p-3">
+            Desarrollado por SESP13 DEVELOPMENTS &copy; {{ date('yy') }}
+        </footer>
     </div>
 </body>
 
