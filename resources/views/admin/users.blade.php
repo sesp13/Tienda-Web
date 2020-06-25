@@ -17,6 +17,9 @@
                     @include('partials.admin.user-table')
                 </div>
                 {{ $users->links() }}
+                <div class="card-footer">
+                    <a href="{{ route('admin.index') }}">Volver al panel de administrador</a>
+                </div>
             </div>
         </div>
     </div>
