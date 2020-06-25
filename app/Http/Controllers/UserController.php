@@ -13,7 +13,7 @@ class UserController extends Controller
         //Proetcción de rutas para usuario autenticado o administrador
         $this->middleware('auth')->only('edit', 'update', 'profile');
         $this->middleware('userOrAdmin')->only('edit', 'update');
-        $this->middleware('user.confirm')->only('profile');
+        $this->middleware('active')->except('unconfirmed','inactive');
     }
 
     public function edit($id)
@@ -67,7 +67,7 @@ class UserController extends Controller
         ]);
     }
 
-    // Método dedicado todos los usuarios no identificados
+    // Método dedicado todos los usuarios no confirmados
     public function unconfirmed()
     {
         //Redireccionamos a los usuarios no autenticados de esta ruta
@@ -82,6 +82,17 @@ class UserController extends Controller
         ]);
     }
 
+    public function inactive()
+    {
+        //Redireccionamos a los usuarios no autenticados de esta ruta
+        $user = Auth::user();
+        if ($user == null) {
+            return redirect()->route('login');
+        }
+
+        return view('user.inactive');
+    }
+
     /*
         Carga la vista del perfil del usuario
     */
@@ -94,7 +105,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function mail(){
+    public function mail()
+    {
         $msg = [
             'name' => "Simón",
             'surname' => "Cano",

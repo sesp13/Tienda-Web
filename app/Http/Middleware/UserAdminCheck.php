@@ -16,6 +16,8 @@ class UserAdminCheck
      */
     public function handle($request, Closure $next)
     {
+        // Este middleware comprueba que se solicite un recurso del usuario autenticado
+        // o que el usuario autenticado sea administrador
         $user = Auth::user();
 
         if ($user->role == "ROLE_ADMIN" || strval($user->id) == $request->id) {
