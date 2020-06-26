@@ -23,7 +23,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -94,7 +94,7 @@
             @yield('content')
         </main>
 
-        <footer class="bg-white text-center p-3">
+        <footer class="bg-dark text-center text-white p-3">
             Desarrollado por SESP13 DEVELOPMENTS &copy; {{ date('yy') }}
         </footer>
     </div>

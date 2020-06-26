@@ -20,7 +20,7 @@
         @endif
         <td>
             <a  href="{{ route('admin.change-state', ['id' => $user->id, 'search' => $search] )  }}" 
-                class="btn btn-primary"
+                class="btn btn-primary col-7"
             >
                 {{$user->active ? 'Deshabilitar' : 'Habilitar' }}
             </a>

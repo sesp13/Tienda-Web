@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h1 class="text-center">Usuarios de la plataforma</h1>
@@ -16,13 +16,17 @@
                     @include('partials.message')
                     @include('partials.admin.user-table')
                 </div>
-                {{ $users->links() }}
+                <div class="justify-content-center d-flex">
+                    {{ $users->links() }}
+                </div>
                 <div class="card-footer">
                     <a href="{{ route('admin.index') }}">Volver al panel de administrador</a>
                 </div>
             </div>
         </div>
     </div>
+    @include('partials.down-banners-2')
+</div>
 </div>
 
 @endsection
