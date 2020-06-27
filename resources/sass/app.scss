@@ -1,24 +1,104 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
-//Página home
-.web-title{
-    font-family: 'Nunito', 'sans-serif';
+
+// PAGINA HOME
+
+.web-title {
+    font-family: "Nunito", "sans-serif";
     text-align: center;
     font-size: 80px;
     text-shadow: 3px 0px 1px gray;
     background-color: white;
     border-bottom: 2px solid #ccc;
+    display: block;
 }
 
-.admin-banner{
+.admin-banner {
     font-style: italic;
     font-weight: bold;
     color: rgb(192, 21, 21);
+}
+
+.main-banner {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 40px;
+    font-style: italic;
+    color: red;
+    display: block;
+    text-shadow: 1px 5px 0px black;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid red;
+    border-radius: 50px;
+    background-color: white;
+    box-shadow: 1px 1px 1px black;
+    transition: all 300ms;
+}
+
+.main-banner:hover {
+    transform: scale(1.1);
+    color: orange;
+    border-color: black;
+}
+
+.products {
+    margin-top: 5px;
+    margin-bottom: 15px;
+
+    .product {
+        margin-top: 25px;
+        transition: all 300ms;
+
+        .card-header{
+            // padding-bottom: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-name{
+            font-size: 25px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-shadow: 1px 1px 1px rgb(78, 78, 78);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    }
+
+    .product:hover {
+        transform: scale(1.1);
+    }
+
+    .photo-product {
+        background-color: green;
+        height: 200px;
+
+        img {
+            max-width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+
+    small {
+        color: #ccc;
+        order: 1;
+    }
+
+    strong {
+        color: red;
+        order: 0;
+        font-size: 20px;
+    }
 }

@@ -27,7 +27,9 @@
                     <h3>De momento no hay usuarios que cumplan este criterio</h3>
                     @endif
                 </div>
-                {{ $users->links() }}
+                <div class="justify-content-center d-flex">
+                    {{ $users->links() }}
+                </div>
                 <div class="card-footer">
                     <a href="{{ route('admin.users') }}">Volver al panel de usuarios</a>
                 </div>

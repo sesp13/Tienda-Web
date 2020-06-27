@@ -35,7 +35,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categorías <span class="caret"></span>
+                            </a>
 
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                <a href="#" class="dropdown-item">
+                                    Categoría 1
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    Categoría 2
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    Categoría 3
+                                </a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item nav-link">
+                            Nosotros
+                        </li>
+                        <li class="nav-item nav-link">
+                            Contacto
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
