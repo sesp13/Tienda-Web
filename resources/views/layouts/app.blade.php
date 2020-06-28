@@ -23,7 +23,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm p-4">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -67,39 +67,42 @@
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i> {{ __('Login') }}
+                            </a>
                         </li>
                         @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <li class="nav-item d-flex">
+                            <a class="nav-link" href="{{ route('register') }}">
+                                <i class="fa fa-address-book" aria-hidden="true"></i> {{ __('Register') }}
+                            </a>
                         </li>
                         @endif
                         @else
-                        @if(Auth::user()->role == "ROLE_ADMIN")
-                        <li class="nav-item">
-                            <p class="nav-link admin-banner">ADMIN</p>
+                        <li class="nav-item nav-link d-flex">
+                            <i class="fa fa-cart-arrow-down cart-icon" aria-hidden="true" tooltip="Carrito de compra"></i>
                         </li>
-                        @endif
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown d-flex justify-content-center align-items-center">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->name }} <span class="admin-banner"> {{ Auth::user()->role == "ROLE_ADMIN" ? '(ADMIN)' : ''}}</span>
+                                <span class="caret"></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                 @if(Auth::user()->role == "ROLE_ADMIN")
                                 <a href="{{ route('admin.index') }}" class="dropdown-item">
-                                    Panel de administrador
+                                    <i class="fa fa-area-chart" aria-hidden="true"></i> Panel de administrador
                                 </a>
                                 @else
                                 <a href="{{ route('user.profile') }}" class="dropdown-item">
-                                    Mi perfil
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i> Mi perfil
                                 </a>
                                 @endif
 
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i> {{ __('Logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -118,7 +121,7 @@
             @yield('content')
         </main>
 
-        <footer class="bg-dark text-center text-white p-3">
+        <footer class="bg-dark text-center text-white p-4">
             Desarrollado por SESP13 DEVELOPMENTS &copy; {{ date('yy') }}
         </footer>
     </div>

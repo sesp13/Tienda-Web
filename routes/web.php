@@ -34,7 +34,8 @@ Route::get('/mail', "UserController@mail");
 //Rutas de administradores
 Route::get('/admin','AdminController@index')->name('admin.index');
 Route::get('/admin/usuarios','AdminController@users')->name('admin.users');
-Route::match(['get','post'],'/admin/usuarios/buscar/{search?}','AdminController@userSearch')->name('admin.users.search');
+Route::post('/admin/usuarios/buscar',"AdminController@loadSearch")->name('admin.users.load');
+Route::get('/admin/usuarios/buscar/{search}','AdminController@userSearch')->name('admin.users.search');
 Route::get('admin/usuarios/cambiar-estado/{id}/{search?}','AdminController@changeUserState')->name('admin.change-state');
 
 // Rutas de reportes de usuario para administradores

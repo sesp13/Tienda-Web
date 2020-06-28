@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    // Propiedades para la búsqueda de usuarios
+    private $loadUrl = 'admin.users.load';
     private $searchUrl = 'admin.users.search';
-    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -48,7 +50,8 @@ class AdminController extends Controller
 
         return view('admin.users.index', [
             'users' => $users,
-            'searchUrl' => $this->searchUrl,
+            'searchMessage' => "Buscar Usuarios",
+            'searchUrl' => $this->loadUrl,
             'search'  => '',
             'banner1Title' => $banner1Title,
             'banner1Links' => $banner1Links,
@@ -58,16 +61,23 @@ class AdminController extends Controller
     }
 
     /*
+        Esta función recibe una petición de búsqueda,
+        la procesa y redirige a la vista correspondiente
+    */
+
+    public function loadSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        return redirect()->route($this->searchUrl, $search);
+    }
+
+    /*
         Esta función permite buscar un usuario en la base de datos por diferentes
         coindidencias en el criterio de búsqueda, sive para un buscador
     */
-    public function userSearch(Request $request, $search = null)
+    public function userSearch(string $search)
     {
-
-        if ($request->ismethod('post')) {
-            $search = $request->input('search');
-        }
-
         $users = User::where('nit', 'like', "%$search%")
             ->orWhere('name', 'like', "%$search%")
             ->orWhere('surname', 'like', "%$search%")

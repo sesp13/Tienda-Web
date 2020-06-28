@@ -11,6 +11,7 @@
      </div>
 
      <h2>Bienvenido a la Tienda Virtual!</h2>
+     @include('partials.search')
      <p>El lugar donde encontrarás gran variadad de productos a un buen precio!!</p>
 
      <!-- Button trigger modal -->

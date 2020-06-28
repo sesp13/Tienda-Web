@@ -44,7 +44,7 @@ class UserController extends Controller
         ]);
 
         //Seteo de los campos del usuario
-        $user->update($data);
+        $update = $user->update($data);
 
         return back()->with('message', "Usuario actualizado correctamente");
     }

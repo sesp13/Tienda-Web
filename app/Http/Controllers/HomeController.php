@@ -46,7 +46,9 @@ class HomeController extends Controller
             'banner1Title' => $banner1Title,
             'banner1Links' => $banner1Links,
             'banner2Title' => $banner2Title,
-            'banner2Links' => $banner2Links
+            'banner2Links' => $banner2Links,
+            'searchMessage' => "Buscar Productos",
+            'searchUrl' => 'admin.users.load'
         ]);
     }
 }

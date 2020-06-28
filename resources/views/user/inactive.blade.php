@@ -3,8 +3,12 @@
 
 @section('content')
 <div class="container bg-white">
-    <h1 class="text-center p-3">403 Prohibido</h1>
+    <h1 class="text-center p-3">
+        <i class="fa fa-user-times" aria-hidden="true"></i> 403 Prohibido
+    </h1>
     <hr>
-    <h2>Lo sentimos tu usuario no se encuentra habilitado en la plataforma</h2>
+    <h2>
+        Lo sentimos tu usuario no se encuentra habilitado en la plataforma
+    </h2>
 </div>
 @endsection
