@@ -40,5 +40,6 @@ Route::get('admin/usuarios/cambiar-estado/{id}/{search?}','AdminController@chang
 
 // Rutas de reportes de usuario para administradores
 Route::get('/admin/usuarios/sin-confirmar','AdminController@usersUnconfirmed')->name('admin.users-unconfirmed');
+Route::get('/admin/usuarios/confirmados','AdminController@usersConfirmed')->name('admin.users-confirmed');
 Route::get('/admin/usuarios/deshabilitados','AdminController@usersInactive')->name('admin.users-inactive');
 Route::get('/admin/usuarios/habiltados','AdminController@usersActive')->name('admin.users-active');

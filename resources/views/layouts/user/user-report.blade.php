@@ -14,7 +14,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h1 class="text-center">{{ $pageTitle }}</h1>

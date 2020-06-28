@@ -38,6 +38,7 @@ class AdminController extends Controller
         $banner1Title = "Información útil sobre usuarios";
         $banner1Links = [
             ['title' => 'Usuarios sin confirmar', 'url' => 'admin.users-unconfirmed'],
+            ['title' => 'Usuarios confirmados', 'url' => 'admin.users-confirmed'],
             ['title' => 'Usuarios deshabilitados', 'url' => 'admin.users-inactive'],
             ['title' => 'Usuarios habilitados', 'url' => 'admin.users-active'],
         ];
@@ -122,6 +123,25 @@ class AdminController extends Controller
 
         $sectionTitle = "Usuarios sin confirmar";
         $pageTitle = "Usuarios sin confirmar";
+
+        return view('layouts.user.user-report', [
+            'users' => $users,
+            'pageTitle' => $pageTitle,
+            'sectionTitle' => $sectionTitle,
+        ]);
+    }
+
+    /*
+        Me devuelve un reporte de los usuarios sin confirmar
+    */
+    public function usersConfirmed()
+    {
+        $users = User::where('role', 'ROLE_USER')
+            ->where('confirmed', true)
+            ->paginate(10);
+
+        $sectionTitle = "Usuarios confirmados";
+        $pageTitle = "Usuarios confirmados";
 
         return view('layouts.user.user-report', [
             'users' => $users,
