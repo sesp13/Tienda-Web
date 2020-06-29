@@ -35,25 +35,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @if(isset($categories) && count($categories) > 0)
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Categorías <span class="caret"></span>
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                <a href="#" class="dropdown-item">
-                                    Categoría 1
+                                <a href="#" class="dropdown-item m-0">
+                                    Todas las categorías
                                 </a>
+                                <hr class="mt-1 mb-1">
+                                @foreach($categories as $categorie)
                                 <a href="#" class="dropdown-item">
-                                    Categoría 2
+                                    {{ $categorie->name }}
                                 </a>
-                                <a href="#" class="dropdown-item">
-                                    Categoría 3
-                                </a>
-
+                                @endforeach
                             </div>
                         </li>
+                        @endif
                         <li class="nav-item nav-link">
                             Nosotros
                         </li>

@@ -13,6 +13,10 @@ class UserSeed extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;'); // Desactivamos la revisión de claves foráneas
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;'); // Reactivamos la revisión de claves foráneas
+
         DB::table('users')->insert([
             'nit' => '001',
             'name' => 'Admin',

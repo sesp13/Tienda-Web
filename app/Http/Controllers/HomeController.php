@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,7 +49,8 @@ class HomeController extends Controller
             'banner2Title' => $banner2Title,
             'banner2Links' => $banner2Links,
             'searchMessage' => "Buscar Productos",
-            'searchUrl' => 'admin.users.load'
+            'searchUrl' => 'admin.users.load',
+            'categories' => Category::all()
         ]);
     }
 }
