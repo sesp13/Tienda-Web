@@ -13,6 +13,7 @@
                 </div>
                 <div class="card-body">
                     <a href="{{ route('admin.users') }}">Usuarios de la plataforma</a>
+                    <a href="{{ route('admin.categories') }}">Categorías de la plataforma</a>
                 </div>
             </div>
         </div>

@@ -38,6 +38,10 @@ Route::get('/admin/usuarios/deshabilitados','AdminController@usersInactive')->na
 Route::get('/admin/usuarios/habiltados','AdminController@usersActive')->name('admin.users-active');
 
 //Gestion de categorías
+Route::get('/admin/categorias','AdminController@categories')->name('admin.categories');
+Route::get('/admin/crear-categoria','AdminController@categorieCreate')->name('admin.categories.create');
+Route::post('/admin/crear-categoria','AdminController@categorieStore')->name('admin.categories.store');
+
 //Gestion de productos
 
 //Rutas de Usuarios

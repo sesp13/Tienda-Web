@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,8 @@ class AdminController extends Controller
     {
         return view('admin.index');
     }
+
+    // GESTION DE USUARIOS
 
     //Devuelve una vista dedicada para los usuarios de la plataforma
     public function users()
@@ -187,4 +190,51 @@ class AdminController extends Controller
             'sectionTitle' => $sectionTitle,
         ]);
     }
+
+    //GESTION DE CATEGORÍAS
+
+    /*
+        Despliega todas las categorías de la plataforma
+    */
+    public function categories()
+    {
+        $categories = Category::paginate(7);
+
+        return view('admin.categories.index', [
+            'categories' => $categories,
+            'searchUrl' => 'categories.load-search',
+            'searchMessage' => 'Buscar categorías'
+        ]);
+    }
+
+    /*
+        Regresa una vista para crear una categoría
+    */
+    public function categorieCreate()
+    {
+        $category = new Category();
+
+        return view('admin.categories.create',[
+            'category' => $category,
+            'pageTitle' => "Crear categoría",
+            'postUrl' => 'admin.categories.store'
+        ]);
+    }
+
+    public function categorieStore(Request $request){
+
+        // Validar los datos
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255', "unique:categories,name"]
+        ]);
+
+        $category = new Category();
+
+        $category->name = $data['name'];
+        
+        $category->save();
+
+        return redirect()->route('admin.categories')->with('message', "Categoría guardada correctamente");
+    }
+
 }
