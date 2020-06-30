@@ -11,7 +11,7 @@
                 </div>
                 <hr>
                 <div class="info-container">
-                    <small>{{ $product->category->name }}</small>
+                    <small>{{ $product->category != null ? $product->category->name : "Sin categoría" }}</small>
                     <strong class="currency">{{ $product->price }}</strong>
                 </div>
                 <button class="btn btn-primary d-block">Agregar al carrito</button>

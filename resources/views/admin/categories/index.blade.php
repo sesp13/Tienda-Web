@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-12">
+        <div class="col-8">
             <div class="card">
                 <div class="card-header">
                     <h1 class="text-center">Categorías de la plataforma</h1>
@@ -14,7 +14,10 @@
                 <div class="card-body">
                     @include('partials.search')
                     @include('partials.message')
-                    <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Crear nueva categoría</a>
+                    <div class="my-3 float-right">
+                        <a href="{{ route('admin.categories.create') }}" class="btn btn-success">Crear nueva categoría</a>
+                        <div class="clearfix"></div>
+                    </div>
                     @include('partials.admin.category-table')
                 </div>
                 <div class="justify-content-center d-flex">

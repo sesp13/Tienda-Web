@@ -54,7 +54,7 @@ class HomeController extends Controller
             'banner2Links' => $banner2Links,
             'searchMessage' => "Buscar Productos",
             'searchUrl' => 'admin.users.load',
-            'categories' => Category::all(),
+            'categories' => Category::take(10)->get(),
             'products' => $products
         ]);
     }

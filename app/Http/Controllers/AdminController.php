@@ -214,15 +214,18 @@ class AdminController extends Controller
     {
         $category = new Category();
 
-        return view('admin.categories.create',[
+        return view('admin.categories.create', [
             'category' => $category,
-            'pageTitle' => "Crear categoría",
+            'edit' => false,
             'postUrl' => 'admin.categories.store'
         ]);
     }
 
-    public function categorieStore(Request $request){
-
+    /*
+        Se guarda una nueva categoría en la base de datos
+    */
+    public function categorieStore(Request $request)
+    {
         // Validar los datos
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', "unique:categories,name"]
@@ -231,10 +234,49 @@ class AdminController extends Controller
         $category = new Category();
 
         $category->name = $data['name'];
-        
+
         $category->save();
 
         return redirect()->route('admin.categories')->with('message', "Categoría guardada correctamente");
     }
 
+    /*
+        Se carga la vista para editar una categoría en la base de datos
+    */
+    public function categoryEdit($id)
+    {
+        $category = Category::findOrFail($id);
+
+        return view('admin.categories.create', [
+            'category' => $category,
+            'edit' => true,
+            'postUrl' => 'admin.categories.update'
+        ]);
+    }
+
+    public function categoryUpdate(Request $request)
+    {
+        $category = Category::find($request->input('id'));
+
+        // Validar los datos
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255', "unique:categories,name," . $category->id]
+        ]);
+
+        $category->name = $data['name'];
+
+        $category->update();
+
+        return redirect()->route('admin.categories')->with('message', "Categoría actualizada correctamente");
+    }
+
+    public function categoryDelete($id)
+    {
+        $category = Category::findOrFail($id);
+
+        $category->delete();
+
+        return redirect()->route('admin.categories')
+            ->with('message', "La categoría {$category->name} ha sido eliminada correctamente");
+    }
 }

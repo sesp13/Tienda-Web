@@ -6,12 +6,13 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="text-center">{{ $pageTitle }}</h1>
+                    <h1 class="text-center">{{ $edit ? "Actualizar categoría" : "Crear nueva categoría"  }}</h1>
                 </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route($postUrl) }}">
                         @csrf
+                        <input type="hidden" name="id" value="{{ $category->id }}" readonly>
 
                         <div class="form-group">
                             <label for="name">Nombre</label>
@@ -30,7 +31,7 @@
 
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-success">
-                                Crear
+                                {{ $edit ? "Editar" : "Crear" }}
                             </button>
                         </div>
                     </form>
