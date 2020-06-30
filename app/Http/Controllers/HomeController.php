@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $products = Product::take(6)->orderBy('created_at', 'desc')->get()->load('category');
+
         //banner izquierdo
         $banner1Title = "Enlaces útiles";
         $banner1Links = [];
@@ -40,7 +43,8 @@ class HomeController extends Controller
         //Banner derecho
         $banner2Title = "Te puede interesar";
         $banner2Links = [
-            ['title' => 'Productos', 'url' => 'home']
+            ['title' => 'Productos', 'url' => 'home'],
+            ['title' => 'Categorías de la tienda', 'url' => 'categories.index']
         ];
 
         return view('home', [
@@ -50,7 +54,8 @@ class HomeController extends Controller
             'banner2Links' => $banner2Links,
             'searchMessage' => "Buscar Productos",
             'searchUrl' => 'admin.users.load',
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'products' => $products
         ]);
     }
 }

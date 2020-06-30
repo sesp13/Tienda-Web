@@ -13977,6 +13977,28 @@ a.text-dark:focus {
   src: url(/fonts/WebSymbols-Regular.otf?a0602257b32df73be81fe2dcbf33473f);
 }
 
+.page-banner {
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  font-style: italic;
+  background-color: #a0a0a0;
+  text-shadow: 2px 2px 1px gray;
+  font-size: 50px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 2px red;
+  margin-bottom: 10px;
+  transition: all 500ms;
+}
+
+.page-banner:hover {
+  transform: scale(1.1);
+  color: white;
+  background-color: #242424;
+  box-shadow: none;
+}
+
 .cart-icon {
   font-size: 30px;
   align-self: center;

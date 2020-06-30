@@ -22,16 +22,9 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-//Rutas de Usuarios
-Route::get('/confirmar-contraseña/{token}',"UserController@confirm")->name('user.confirm');
-Route::get('/sin-confirmar', "UserController@unconfirmed")->name('user.unconfirmed');
-Route::get('/deshabilitado', "UserController@inactive")->name('user.inactive');
-Route::get('/usuario/editar/{id}', "UserController@edit")->name('user.edit');
-Route::get('/usuario/perfil', "UserController@profile")->name('user.profile');
-Route::post('/usuario/actualizar', "UserController@update")->name('user.update');
-Route::get('/mail', "UserController@mail");
-
 //Rutas de administradores
+
+//Gestion de usuarios
 Route::get('/admin','AdminController@index')->name('admin.index');
 Route::get('/admin/usuarios','AdminController@users')->name('admin.users');
 Route::post('/admin/usuarios/buscar',"AdminController@loadSearch")->name('admin.users.load');
@@ -43,3 +36,23 @@ Route::get('/admin/usuarios/sin-confirmar','AdminController@usersUnconfirmed')->
 Route::get('/admin/usuarios/confirmados','AdminController@usersConfirmed')->name('admin.users-confirmed');
 Route::get('/admin/usuarios/deshabilitados','AdminController@usersInactive')->name('admin.users-inactive');
 Route::get('/admin/usuarios/habiltados','AdminController@usersActive')->name('admin.users-active');
+
+//Gestion de categorías
+//Gestion de productos
+
+//Rutas de Usuarios
+Route::get('/confirmar-contraseña/{token}',"UserController@confirm")->name('user.confirm');
+Route::get('/sin-confirmar', "UserController@unconfirmed")->name('user.unconfirmed');
+Route::get('/deshabilitado', "UserController@inactive")->name('user.inactive');
+Route::get('/usuario/editar/{id}', "UserController@edit")->name('user.edit');
+Route::get('/usuario/perfil', "UserController@profile")->name('user.profile');
+Route::post('/usuario/actualizar', "UserController@update")->name('user.update');
+Route::get('/mail', "UserController@mail");
+
+//Rutas de categorías
+Route::get('/categorias',"CategoryController@index")->name('categories.index');
+Route::post('/buscar-categorias',"CategoryController@loadCategory")->name('categories.load-search');
+Route::get('/categorias/{search}',"CategoryController@categorySearch")->name('categories.search');
+
+//Rutas de productos
+Route::get('/categoria/{id}',"ProductController@getProductsByCategory")->name('products.get-by-categorie');

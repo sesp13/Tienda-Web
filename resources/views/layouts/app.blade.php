@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -41,12 +42,12 @@
                                 Categorías <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a href="#" class="dropdown-item m-0">
+                                <a href="{{ route('categories.index') }}" class="dropdown-item m-0">
                                     Todas las categorías
                                 </a>
                                 <hr class="mt-1 mb-1">
                                 @foreach($categories as $categorie)
-                                <a href="#" class="dropdown-item">
+                                <a href="{{ route('products.get-by-categorie', $categorie->id ) }}" class="dropdown-item">
                                     {{ $categorie->name }}
                                 </a>
                                 @endforeach
