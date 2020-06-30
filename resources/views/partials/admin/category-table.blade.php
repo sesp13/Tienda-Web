@@ -11,6 +11,9 @@
         <td>{{ $category->name }}</td>
         <td>{{ count($category->products) }}</td>
         <td>
+            <a href="{{ route('products.get-by-categorie',$category->id) }}" class="btn btn-primary">
+                Ver Productos
+            </a>
             <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-warning">Editar</a>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCategoryDelete-{{ $category->id }}">
@@ -32,7 +35,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            <a href="{{ route('admin.categories.delete',$category->id) }}" class="btn btn-danger" >Eliminar</a>
+                            <a href="{{ route('admin.categories.delete',$category->id) }}" class="btn btn-danger">Eliminar</a>
                         </div>
                     </div>
                 </div>

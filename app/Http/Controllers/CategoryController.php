@@ -33,7 +33,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.search', $search);
     }
 
-    public function categorySearch($search)
+    public function categorySearch(string $search)
     {
         $categories = Category::where('name', 'like', "%$search%")
             ->paginate(5);

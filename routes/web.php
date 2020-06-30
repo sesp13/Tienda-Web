@@ -44,6 +44,8 @@ Route::post('/admin/crear-categoria','AdminController@categorieStore')->name('ad
 Route::get('/admin/editar-categoria/{id}','AdminController@categoryEdit')->name('admin.categories.edit');
 Route::post('/admin/editar-categoria','AdminController@categoryUpdate')->name('admin.categories.update');
 Route::get('/admin/eliminar-categoria/{id}','AdminController@categoryDelete')->name('admin.categories.delete');
+Route::post('/admin/buscar-categoria','AdminController@loadCategorySearch')->name('admin.categories.load-search');
+Route::get('/admin/buscar-categoria/{id}','AdminController@categorySearch')->name('admin.categories.search');
 
 //Gestion de productos
 

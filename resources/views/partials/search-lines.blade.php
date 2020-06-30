@@ -8,7 +8,9 @@
 <form  action="{{ route($searchUrl) }}" method="POST">
     @csrf
         <div class="form-group">
-            <label for="search" class="form-label">{{ $searchMessage }}</label>
+            <label for="search" class="form-label">
+            <i class="fa fa-search" aria-hidden="true"></i> {{ $searchMessage }} 
+            </label>
             <input type="text" class="form-control" required name="search" id="search">
         </div>
         <input type="submit" class="btn btn-primary" value="Buscar">

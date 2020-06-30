@@ -200,10 +200,29 @@ class AdminController extends Controller
     {
         $categories = Category::paginate(7);
 
+        //Urls para el banner lateral Vista (partials.vertical-banners-2)
+        //Estructura del array
+        //['title' => "Texto para la url", 'url' => "Nombre de la url a redirigir"]
+
+        //banner izquierdo
+        $banner1TitleV = "Información útil sobre categorías";
+        $banner1VLinks = [];
+
+        //Banner derecho
+        $banner2TitleV = "Te puede interesar";
+        $banner2VLinks = [
+            ['title' => 'Panel de administrador', 'url' => 'admin.index']
+        ];
+
+
         return view('admin.categories.index', [
             'categories' => $categories,
-            'searchUrl' => 'categories.load-search',
-            'searchMessage' => 'Buscar categorías'
+            'searchUrl' => 'admin.categories.load-search',
+            'searchMessage' => 'Buscar categorías',
+            'banner1TitleV' => $banner1TitleV,
+            'banner1VLinks' => $banner1VLinks,
+            'banner2TitleV' => $banner2TitleV,
+            'banner2VLinks' => $banner2VLinks
         ]);
     }
 
@@ -243,7 +262,7 @@ class AdminController extends Controller
     /*
         Se carga la vista para editar una categoría en la base de datos
     */
-    public function categoryEdit($id)
+    public function categoryEdit(int $id)
     {
         $category = Category::findOrFail($id);
 
@@ -254,6 +273,9 @@ class AdminController extends Controller
         ]);
     }
 
+    /*
+        Actualizar una categoría en la base de datos
+    */
     public function categoryUpdate(Request $request)
     {
         $category = Category::find($request->input('id'));
@@ -270,7 +292,10 @@ class AdminController extends Controller
         return redirect()->route('admin.categories')->with('message', "Categoría actualizada correctamente");
     }
 
-    public function categoryDelete($id)
+    /*
+        Eliminar una categoría en la base de datos
+    */
+    public function categoryDelete(int $id)
     {
         $category = Category::findOrFail($id);
 
@@ -278,5 +303,28 @@ class AdminController extends Controller
 
         return redirect()->route('admin.categories')
             ->with('message', "La categoría {$category->name} ha sido eliminada correctamente");
+    }
+
+    /*
+        Carga la búsqueda de una categoría en la base de datos
+    */
+    public function loadCategorySearch(Request $request)
+    {
+        $search = $request->input('search');
+        return redirect()->route('admin.categories.search', $search);
+    }
+
+    /*
+        Busca las categorías que coincidan con el criterio
+    */
+    public function categorySearch(string $search)
+    {
+        $categories = Category::where('name', 'like', "%$search%")
+            ->paginate(5);
+
+        return view('admin.categories.categories-search', [
+            'categories' => $categories,
+            'search' => $search
+        ]);
     }
 }

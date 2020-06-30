@@ -16,7 +16,7 @@ class UserController extends Controller
         $this->middleware('active')->except('unconfirmed','inactive');
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         //Saber si el usuario autenticado es admin o no
         $admin = Auth::user()->role == "ROLE_ADMIN" ? true : false;
@@ -49,7 +49,7 @@ class UserController extends Controller
         return back()->with('message', "Usuario actualizado correctamente");
     }
 
-    public function confirm($token)
+    public function confirm(string $token)
     {
         //Obtencion del usuario por medio de su token de correo
         $user = User::where('email_token', $token)

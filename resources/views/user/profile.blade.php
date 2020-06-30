@@ -9,7 +9,9 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="text-center">Mi perfil</h1>
+                    <h1 class="text-center">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>  Mi perfil
+                    </h1>
                 </div>
                 <div class="card-body">
                     <h2>Hola! {{ $user->name }} {{ $user->surname }} </h2>
