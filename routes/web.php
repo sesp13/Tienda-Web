@@ -64,4 +64,5 @@ Route::post('/buscar-categorias',"CategoryController@loadCategory")->name('categ
 Route::get('/categorias/{search}',"CategoryController@categorySearch")->name('categories.search');
 
 //Rutas de productos
+Route::get('/productos',"ProductController@index")->name('products.index');
 Route::get('/categoria/{id}',"ProductController@getProductsByCategory")->name('products.get-by-categorie');

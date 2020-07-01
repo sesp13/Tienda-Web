@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', "Categorías")
+@section('title', $sectionTitle)
 
 @section('content')
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
-            <h1 class="page-banner">Productos de {{ $category->name }}</h1>
+            <h1 class="page-banner">{{ $pageTitle }}</h1>
             @if(count($products) > 0)
             @include('partials.products.product-grid')
             <div class="d-flex justify-content-center mt-3">

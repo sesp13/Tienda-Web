@@ -43,7 +43,7 @@ class HomeController extends Controller
         //Banner derecho
         $banner2Title = "Te puede interesar";
         $banner2Links = [
-            ['title' => 'Productos', 'url' => 'home'],
+            ['title' => 'Productos', 'url' => 'products.index'],
             ['title' => 'Categorías de la tienda', 'url' => 'categories.index']
         ];
 
