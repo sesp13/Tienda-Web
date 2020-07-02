@@ -19,7 +19,7 @@
         <td class="bg-danger text-white text-center border border-white rounded">No</td>
         @endif
         <td>
-            <a href="{{ route('admin.change-state', ['id' => $user->id, 'search' => $search] )  }}" class="btn btn-primary col-7">
+            <a href="{{ route('admin.product.change-state', ['id' => $user->id, 'search' => $search] )  }}" class="btn btn-primary col-7">
                 {{$user->active ? 'Deshabilitar' : 'Habilitar' }}
             </a>
             <a href="{{ route('user.edit',$user->id) }}" class="btn btn-warning ml-2">

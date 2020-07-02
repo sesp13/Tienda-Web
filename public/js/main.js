@@ -4,7 +4,7 @@ function convertCurrency() {
     $(".currency").each(function() {
         let number = $(this).text();
         let converted = new Intl.NumberFormat("es").format(number);
-        $(this).text(converted);
+        $(this).text("$ " + converted);
     });
 }
 

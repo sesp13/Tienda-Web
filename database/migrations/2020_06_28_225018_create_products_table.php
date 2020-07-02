@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->unsignedDouble('price');
             $table->unsignedInteger('stock');
+            $table->boolean('active')->default(true);
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();
 

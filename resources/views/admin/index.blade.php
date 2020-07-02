@@ -10,12 +10,21 @@
             <div class="card">
                 <div class="card-header">
                     <h1 class="text-center custom-class">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> Panel de Administrador
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> Panel de Administrador
                     </h1>
                 </div>
                 <div class="card-body">
-                    <a href="{{ route('admin.users') }}">Usuarios de la plataforma</a>
-                    <a href="{{ route('admin.categories') }}">Categorías de la plataforma</a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('admin.users') }}">Usuarios de la plataforma</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.categories') }}">Categorías de la plataforma</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.products') }}">Productos de la plataforma</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

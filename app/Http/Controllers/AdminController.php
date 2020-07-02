@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -324,6 +325,70 @@ class AdminController extends Controller
 
         return view('admin.categories.categories-search', [
             'categories' => $categories,
+            'search' => $search
+        ]);
+    }
+
+    //GESTION DE PRODUCTOS
+
+    /*
+        Retorna una vista con todos los productos de la plataforma
+    */
+    public function products()
+    {
+        $products = Product::paginate(10);
+
+        return view('admin.products.index', [
+            'products' => $products,
+            'searchMessage' => 'Buscar productos',
+            'searchUrl' => 'admin.products.load-search',
+            'search' => ''
+        ]);
+    }
+
+    public function changeProductState(int $id, string $search = null)
+    {
+        $product = Product::findOrFail($id);
+
+        $product->active = !$product->active;
+
+        $product->update();
+
+        //Search se usa para devolverse a la vista de búsqueda de producto
+        if ($search != null) {
+            return redirect()->route('admin.products.search', $search)
+            ->with('message', "Cambio de estado exitoso");
+        } else {
+            return back()->with('message', "Cambio de estado exitoso");
+        }
+    }
+
+    /*
+       Procesa la petición de búsqueda de productos y redirecciona a un método
+       por GET con los resultados 
+    */
+    public function loadProductSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        return redirect()->route('admin.products.search', $search);
+    }
+
+    /*
+        Se busca en la base de datos las coincidencias de búsqueda y
+        se retorna una vista con los resultados
+    */
+    public function productSearch(string $search)
+    {
+        $products = Product::where('id', 'like', "%$search%")
+            ->orWhere('alt_code', 'like', "%$search%")
+            ->orWhere('name', 'like', "%$search%")
+            ->orWhere('price', 'like', "%$search%")
+            ->orWhere('description', 'like', "%$search%")
+            ->paginate(10);
+
+        return view('admin.products.products-search', [
+            'products' => $products,
             'search' => $search
         ]);
     }
