@@ -36,6 +36,9 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer">
+                    <a href="{{ route('admin.categories') }}">Volver al panel de categorías</a>
+                </div>
             </div>
         </div>
     </div>

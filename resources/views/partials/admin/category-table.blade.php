@@ -2,14 +2,14 @@
     <thead class="thead-dark">
         <tr>
             <th>Nombre</th>
-            <th>Cantidad de productos asociados</th>
-            <th>Acciones</th>
+            <th class="text-center">Cantidad de productos asociados</th>
+            <th class="text-center">Acciones</th>
         </tr>
     </thead>
     @foreach($categories as $category)
     <tr>
         <td>{{ $category->name }}</td>
-        <td>{{ count($category->products) }}</td>
+        <td class="text-center">{{ count($category->products) }}</td>
         <td>
             <a href="{{ route('products.get-by-categorie',$category->id) }}" class="btn btn-primary">
                 Ver Productos

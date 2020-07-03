@@ -54,6 +54,8 @@ Route::get('admin/productos/cambiar-estado/{id}/{search?}', 'AdminController@cha
 ->name('admin.product.change-state');
 Route::post('/admin/productos/buscar', 'AdminController@loadProductSearch')->name('admin.products.load-search');
 Route::get('/admin/productos/{search}', 'AdminController@productSearch')->name('admin.products.search');
+Route::get('/admin/crear-producto', 'AdminController@productCreate')->name('admin.products.create');
+Route::post('/admin/crear-producto', 'AdminController@productStore')->name('admin.products.store');
 
 
 //Rutas de Usuarios

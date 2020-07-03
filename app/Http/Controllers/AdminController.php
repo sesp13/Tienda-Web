@@ -357,7 +357,7 @@ class AdminController extends Controller
         //Search se usa para devolverse a la vista de búsqueda de producto
         if ($search != null) {
             return redirect()->route('admin.products.search', $search)
-            ->with('message', "Cambio de estado exitoso");
+                ->with('message', "Cambio de estado exitoso");
         } else {
             return back()->with('message', "Cambio de estado exitoso");
         }
@@ -391,5 +391,53 @@ class AdminController extends Controller
             'products' => $products,
             'search' => $search
         ]);
+    }
+
+    /*
+        Se retona una vista para crear un producto
+    */
+    public function productCreate()
+    {
+        $product = new Product();
+        $categories = Category::all();
+
+        return view('admin.products.create', [
+            'product' => $product,
+            'categories' => $categories,
+            'edit' => false,
+            'url' => 'admin.products.store'
+        ]);
+    }
+
+    public function productStore(Request $request)
+    {        
+        $data = $request->validate([
+            'alt_code' => ['nullable', 'unique:products,alt_code'],
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric'],
+            'image_path' => ['image','mimes:jpg,jpeg,png,gif'],
+            'stock' => ['numeric', 'required', ''],
+            'category_id' => [],
+            'description' => [],
+            'active' => [],
+        ]);
+
+        //Guardado del producto
+        $product = new Product();
+
+        $product->alt_code = $data['alt_code'];
+        $product->category_id = $data['category_id'];
+        $product->name = $data['name'];
+        $product->description = $data['description'];
+        $product->price = $data['price'];
+        $product->stock = $data['stock'];
+        $product->active = $data['active'];
+
+        //Guardado de la imagen
+
+
+        $product->save();
+
+        return redirect()->route('admin.products')->with('message', 'producto creado correctamente');
     }
 }
