@@ -75,3 +75,4 @@ Route::get('/categorias/{search}', "CategoryController@categorySearch")->name('c
 //Rutas de productos
 Route::get('/productos', "ProductController@index")->name('products.index');
 Route::get('/categoria/{id}', "ProductController@getProductsByCategory")->name('products.get-by-categorie');
+Route::get('/imagen-producto/{filename?}', "ProductController@getImage")->name('products.get-image');

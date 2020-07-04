@@ -14073,6 +14073,8 @@ a.text-dark:focus {
 
 .products .photo-product {
   height: 200px;
+  display: block;
+  text-align: center;
 }
 
 .products .photo-product img {

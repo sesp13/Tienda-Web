@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Product;
+use Exception;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -43,14 +46,14 @@ class ProductController extends Controller
             ['title' => 'Home', 'url' => 'home']
         ];
 
-        return view('layouts.product.product-report',[
+        return view('layouts.product.product-report', [
             'sectionTitle' => 'Todos los productos',
             'pageTitle' => 'Todos los productos',
             'products' => $products,
             'banner1Title' => $banner1Title,
             'banner1Links' => $banner1Links,
             'banner2Title' => $banner2Title,
-            'banner2Links' => $banner2Links 
+            'banner2Links' => $banner2Links
         ]);
     }
 
@@ -83,14 +86,27 @@ class ProductController extends Controller
             ['title' => 'Home', 'url' => 'home']
         ];
 
-        return view('layouts.product.product-report',[
+        return view('layouts.product.product-report', [
             'sectionTitle' => "Productos de {$category->name}",
             'pageTitle' => "Productos de {$category->name}",
             'products' => $products,
             'banner1Title' => $banner1Title,
             'banner1Links' => $banner1Links,
             'banner2Title' => $banner2Title,
-            'banner2Links' => $banner2Links 
+            'banner2Links' => $banner2Links
         ]);
+    }
+
+    /*
+        Se obtiene una imagen del disco virtual product_images
+    */
+    public function getImage(string $filename)
+    {
+        try {
+            $file = Storage::disk('product_images')->get($filename);
+        } catch (Exception $e) {
+            $file = Storage::disk('public')->get('default.jpg');
+        }
+        return new Response($file, 200);
     }
 }

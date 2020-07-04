@@ -6,9 +6,15 @@
                 <p class="product-name">{{ $product->name }}</p>
             </div>
             <div class="card-body">
+                @if($product->image_path)
                 <div class="photo-product">
-                    <img src="https://www.pulsovideojuegos.com/wp-content/uploads/2020/01/super-mario-bros-3.jpg" alt="">
+                    <img src="{{ route('products.get-image',$product->image_path) }}" alt="">
                 </div>
+                @else
+                <div class="photo-product">
+                    <img src="https://previews.123rf.com/images/themoderncanvas/themoderncanvas1605/themoderncanvas160500008/56739040-dise%C3%B1o-de-iconos-de-productos-org%C3%A1nicos-s%C3%ADmbolo-del-producto-org%C3%A1nico-sello-de-producto-org%C3%A1nico-con-dise%C3%B1o-de-for.jpg" alt="Imagen por defecto">
+                </div>
+                @endif
                 <hr>
                 <div class="info-container">
                     <small>{{ $product->category != null ? $product->category->name : "Sin categoría" }}</small>

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Product;
 use App\User;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -346,6 +349,10 @@ class AdminController extends Controller
         ]);
     }
 
+    /*
+        Se usa para cambiar el estado active de un producto
+        Se redirige a una ruta que despliega una lista de productos
+    */
     public function changeProductState(int $id, string $search = null)
     {
         $product = Product::findOrFail($id);
@@ -409,13 +416,19 @@ class AdminController extends Controller
         ]);
     }
 
+    /*
+        Se guarda un producto en la BD,
+        se retorna una redireccion a la ruta de
+        la vista principal de productos en la plataforma
+    */
     public function productStore(Request $request)
-    {        
+    {
+
         $data = $request->validate([
             'alt_code' => ['nullable', 'unique:products,alt_code'],
             'name' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric'],
-            'image_path' => ['image','mimes:jpg,jpeg,png,gif'],
+            'image_path' => ['image', 'mimes:jpg,jpeg,png,gif'],
             'stock' => ['numeric', 'required', ''],
             'category_id' => [],
             'description' => [],
@@ -433,8 +446,14 @@ class AdminController extends Controller
         $product->stock = $data['stock'];
         $product->active = $data['active'];
 
-        //Guardado de la imagen
+        $image_path = $data['image_path'];
 
+        //Guardado de la imagen
+        if ($data['image_path']) {
+            $image_path_name = time() . $image_path->getClientOriginalName();
+            Storage::disk('product_images')->put($image_path_name, File::get($image_path));
+            $product->image_path = $image_path_name;
+        }
 
         $product->save();
 
