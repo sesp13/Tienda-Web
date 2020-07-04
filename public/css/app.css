@@ -14071,13 +14071,13 @@ a.text-dark:focus {
   transform: scale(1.1);
 }
 
-.products .photo-product {
+.photo-product {
   height: 200px;
   display: block;
   text-align: center;
 }
 
-.products .photo-product img {
+.photo-product img {
   max-width: 100%;
   height: 100%;
 }

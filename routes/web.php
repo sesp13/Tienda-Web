@@ -56,6 +56,8 @@ Route::post('/admin/productos/buscar', 'AdminController@loadProductSearch')->nam
 Route::get('/admin/productos/{search}', 'AdminController@productSearch')->name('admin.products.search');
 Route::get('/admin/crear-producto', 'AdminController@productCreate')->name('admin.products.create');
 Route::post('/admin/crear-producto', 'AdminController@productStore')->name('admin.products.store');
+Route::get('/admin/editar-producto/{id}', 'AdminController@productEdit')->name('admin.products.edit');
+Route::post('/admin/editar-producto', 'AdminController@productUpdate')->name('admin.products.update');
 
 
 //Rutas de Usuarios

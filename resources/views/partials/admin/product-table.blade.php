@@ -28,7 +28,7 @@
             <a href="{{ route('admin.product.change-state', ['id' => $product->id, 'search' => $search] )  }}" class="btn btn-primary">
                 {{$product->active ? 'Deshabilitar' : 'Habilitar' }}
             </a>
-            <a href="#" class="btn btn-warning">
+            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning">
                 <i class="fa fa-pencil"></i> Editar
             </a>
             <a href="#" class="btn btn-info">

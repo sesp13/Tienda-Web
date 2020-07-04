@@ -10,8 +10,9 @@
         </div>
 
         <div class="card-body">
-          <form method="POST" action="{{ route($url) }}"  enctype="multipart/form-data">
+          <form method="POST" action="{{ route($url) }}" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="id" value="{{ $product->id }}">
 
             <div class="form-group row">
               <label for="alt_code" class="col-md-3 col-form-label text-md-right">Código Alterno</label>
@@ -33,7 +34,7 @@
               <div class="col-md-8">
                 <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                   @foreach($categories as $category)
-                  <option value="{{ $category->id }}">{{ $category->name }}</option>
+                  <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
                   @endforeach
                 </select>
 
@@ -101,6 +102,15 @@
               </div>
             </div>
 
+            @if($product->image_path)
+            <div class="row  my-3">
+              <div class="col-md-3"></div>
+              <div class="col-md-8 photo-product">
+                <img src="{{ route('products.get-image',$product->image_path) }}" alt="Imagen del producto">
+              </div>
+            </div>
+            @endif
+
             <div class="form-group row">
               <label for="stock" class="col-md-3 col-form-label text-md-right">stock</label>
 
@@ -134,7 +144,7 @@
             <div class="form-group row mb-0">
               <div class="col-md-8 offset-md-3">
                 <button type="submit" class="btn btn-primary">
-                  Guardar producto
+                  {{ $edit ? "Editar Producto" : "Guardar producto"}}
                 </button>
               </div>
             </div>

@@ -446,10 +446,14 @@ class AdminController extends Controller
         $product->stock = $data['stock'];
         $product->active = $data['active'];
 
-        $image_path = $data['image_path'];
+        if (isset($data['image_path'])) {
+            $image_path = $data['image_path'];
+        } else {
+            $image_path = null;
+        }
 
         //Guardado de la imagen
-        if ($data['image_path']) {
+        if ($image_path) {
             $image_path_name = time() . $image_path->getClientOriginalName();
             Storage::disk('product_images')->put($image_path_name, File::get($image_path));
             $product->image_path = $image_path_name;
@@ -458,5 +462,71 @@ class AdminController extends Controller
         $product->save();
 
         return redirect()->route('admin.products')->with('message', 'producto creado correctamente');
+    }
+
+    /*
+        Se retorna una vista para editar un producto
+    */
+    public function productEdit(int $id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+
+        return view('admin.products.create', [
+            'product' => $product,
+            'categories' => $categories,
+            'edit' => true,
+            'url' => 'admin.products.update'
+        ]);
+    }
+
+    /*
+        Actualiza un producto en la base de datos,
+        si se tiene éxito, se retorna a la ruta del panel de productos
+    */
+    public function productUpdate(Request $request)
+    {
+        $id = $request->input('id');
+
+        $product = Product::findOrFail($id);
+
+        $data = $request->validate([
+            'alt_code' => ['nullable', 'unique:products,alt_code,' . $id],
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric'],
+            'image_path' => ['image', 'mimes:jpg,jpeg,png,gif'],
+            'stock' => ['numeric', 'required', ''],
+            'category_id' => [],
+            'description' => [],
+            'active' => [],
+        ]);
+
+        $product->alt_code = $data['alt_code'];
+        $product->category_id = $data['category_id'];
+        $product->name = $data['name'];
+        $product->description = $data['description'];
+        $product->price = $data['price'];
+        $product->stock = $data['stock'];
+        $product->active = $data['active'];
+
+        if (isset($data['image_path'])) {
+            $image_path = $data['image_path'];
+        } else {
+            $image_path = null;
+        }
+
+        //Guardado de la imagen
+        if ($image_path) {
+            if ($product->image_path != null) {
+                Storage::disk('product_images')->delete($product->image_path);
+            }
+            $image_path_name = time() . $image_path->getClientOriginalName();
+            Storage::disk('product_images')->put($image_path_name, File::get($image_path));
+            $product->image_path = $image_path_name;
+        }
+
+        $product->update();
+
+        return redirect()->route('admin.products')->with('message', 'producto editado correctamente');
     }
 }
