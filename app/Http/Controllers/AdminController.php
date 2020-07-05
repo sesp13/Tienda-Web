@@ -339,7 +339,7 @@ class AdminController extends Controller
     */
     public function products()
     {
-        $products = Product::paginate(10);
+        $products = Product::orderBy('updated_at','desc')->paginate(10);
 
         return view('admin.products.index', [
             'products' => $products,
@@ -527,6 +527,22 @@ class AdminController extends Controller
 
         $product->update();
 
-        return redirect()->route('admin.products')->with('message', 'producto editado correctamente');
+        return redirect()->route('admin.products')->with('message', "El producto {$product->name} ha sido editado correctamente");
+    }
+
+    /*
+        Elimina un producto de la base de datos
+    */
+    public function productDelete(int $id)
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product->image_path != null) {
+            Storage::disk('product_images')->delete($product->image_path);
+        }
+
+        $product->delete();
+
+        return redirect()->route('admin.products')->with('message', "El producto {$product->name} ha sido eliminado correctamente");
     }
 }

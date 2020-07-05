@@ -58,6 +58,7 @@ Route::get('/admin/crear-producto', 'AdminController@productCreate')->name('admi
 Route::post('/admin/crear-producto', 'AdminController@productStore')->name('admin.products.store');
 Route::get('/admin/editar-producto/{id}', 'AdminController@productEdit')->name('admin.products.edit');
 Route::post('/admin/editar-producto', 'AdminController@productUpdate')->name('admin.products.update');
+Route::get('/admin/eliminar-producto/{id}', 'AdminController@productDelete')->name('admin.products.delete');
 
 
 //Rutas de Usuarios
