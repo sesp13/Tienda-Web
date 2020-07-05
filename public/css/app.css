@@ -14071,13 +14071,15 @@ a.text-dark:focus {
   transform: scale(1.1);
 }
 
-.photo-product {
+.photo-product,
+.photo-product-single {
   height: 200px;
   display: block;
   text-align: center;
 }
 
-.photo-product img {
+.photo-product img,
+.photo-product-single img {
   max-width: 100%;
   height: 100%;
 }
@@ -14100,5 +14102,35 @@ a.text-dark:focus {
 
 .symbols {
   font-family: "symbols";
+}
+
+.p-table th {
+  text-align: center;
+}
+
+.p-table-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-table-buttons a {
+  margin-right: 2px;
+}
+
+.photo-product-single {
+  height: 500px;
+}
+
+.p-title {
+  text-align: center;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-shadow: 1px 1px 1px #4e4e4e;
+}
+
+.p-price {
+  color: red;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 35px;
 }
 

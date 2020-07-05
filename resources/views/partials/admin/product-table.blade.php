@@ -1,4 +1,4 @@
-<table class="table table-border table-striped">
+<table class="table table-border table-striped p-table">
     <thead class="thead-dark">
         <tr>
             <th>Id</th>
@@ -24,14 +24,14 @@
         @else
         <td class="bg-danger text-white text-center border border-white rounded">No</td>
         @endif
-        <td class="d-flex justify-content-between">
+        <td class="p-table-buttons">
             <a href="{{ route('admin.product.change-state', ['id' => $product->id, 'search' => $search] )  }}" class="btn btn-primary">
                 {{$product->active ? 'Deshabilitar' : 'Habilitar' }}
             </a>
             <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning">
                 <i class="fa fa-pencil"></i> Editar
             </a>
-            <a href="#" class="btn btn-info">
+            <a href="{{ route('products.show',$product->id) }}" class="btn btn-info">
                 <i class="fa fa-eye"></i> Ver
             </a>
             <!-- Button trigger modal -->
@@ -44,7 +44,9 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">¿Estás seguro?</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> ¿Estás seguro?
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -54,7 +56,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            <a href="{{ route('admin.products.delete', $product->id) }}" class="btn btn-danger">Eliminar</a>
+                            <a href="{{ route('admin.products.delete', $product->id) }}" class="btn btn-danger">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar
+                            </a>
                         </div>
                     </div>
                 </div>

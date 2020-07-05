@@ -112,9 +112,8 @@
     .product:hover {
         transform: scale(1.1);
     }
-    
 }
-.photo-product {
+.photo-product, .photo-product-single {
     height: 200px;
     display: block;
     text-align: center;
@@ -145,4 +144,38 @@
     font-family: "symbols";
 }
 
-//Categorías
+// Tabla de productos ADMIN
+
+.p-table {
+    th {
+        text-align: center;
+    }
+}
+
+.p-table-buttons {
+    display: flex;
+    justify-content: space-between;
+
+    a{
+        margin-right: 2px;
+    }
+}
+
+//Vista individual producto
+
+.photo-product-single{
+    height: 500px;
+}
+
+.p-title{
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-shadow: 1px 1px 1px rgb(78, 78, 78);
+}
+
+.p-price{
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 35px;
+}

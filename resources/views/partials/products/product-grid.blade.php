@@ -17,13 +17,25 @@
                 @endif
                 <hr>
                 <div class="info-container">
-                    <small>{{ $product->category != null ? $product->category->name : "Sin categoría" }}</small>
+                    @if($product->category != null)
+                    <small>
+                        <a href="{{ route('products.get-by-categorie',$product->category->id) }}">
+                            {{ $product->category->name }}
+                        </a>
+                    </small>
+                    @else
+                    <small>
+                        Sin categoría
+                    </small>
+                    @endif
                     <strong class="currency">{{ $product->price }}</strong>
                 </div>
                 <button class="btn btn-primary d-block">Agregar al carrito</button>
             </div>
             <div class="card-footer">
-                Ver más
+                <a href="{{ route('products.show',$product->id) }}">
+                    Ver más
+                </a>
             </div>
         </div>
     </div>

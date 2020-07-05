@@ -165,4 +165,49 @@ class ProductController extends Controller
             'banner2Links' => $banner2Links
         ]);
     }
+
+    /*
+        Retorna la vista particular de un producto
+    */
+
+    public function show(int $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $products = Product::take(3)
+            ->where('active', true)
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->inRandomOrder()
+            ->get()->load('category');
+        
+                //Contenido de los banners inferiores
+
+        //banner izquierdo
+        $banner1Title = "Enlaces útiles";
+        $banner1Links = [
+            ['title' => 'Categorías de la tienda', 'url' => 'categories.index']
+        ];
+
+        //Rutas exclusivas del administrador
+        if(Auth::user()->role == "ROLE_ADMIN"){
+            array_push($banner1Links, ['title' => '[ADMIN] Panel de productos', 'url' => 'admin.products']);
+        }
+
+        //Banner derecho
+        $banner2Title = "Te puede interesar";
+        $banner2Links = [
+            ['title' => 'Home', 'url' => 'home']
+        ];
+
+        return view('product.show', [
+            'sectionTitle' => "Producto: {$product->name}",
+            'product' => $product,
+            'products' => $products,
+            'banner1Title' => $banner1Title,
+            'banner1Links' => $banner1Links,
+            'banner2Title' => $banner2Title,
+            'banner2Links' => $banner2Links
+        ]);
+    }
 }
