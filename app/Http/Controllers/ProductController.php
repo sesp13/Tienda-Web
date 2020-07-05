@@ -23,7 +23,7 @@ class ProductController extends Controller
     */
     public function index()
     {
-        $products = Product::paginate(9);
+        $products = Product::orderBy('created_at', 'desc')->paginate(9);
 
         //Contenido de los banners inferiores
 
@@ -63,7 +63,9 @@ class ProductController extends Controller
     public function getProductsByCategory(int $id)
     {
         $category = Category::findOrFail($id);
-        $products = Product::where('category_id', $category->id)->paginate(9);
+        $products = Product::where('category_id', $category->id)
+            ->where('active', true)
+            ->paginate(9);
 
         //Contenido de los banners inferiores
 
@@ -108,5 +110,59 @@ class ProductController extends Controller
             $file = Storage::disk('public')->get('default.jpg');
         }
         return new Response($file, 200);
+    }
+
+    /*
+       Procesa la petición de búsqueda de productos y redirecciona a un método
+       por GET con los resultados 
+    */
+    public function loadSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        return redirect()->route('products.search', $search);
+    }
+
+    /*
+        Se busca en la base de datos las coincidencias de búsqueda y
+        se retorna una vista con los resultados
+    */
+    public function search(string $search)
+    {
+        // Condicional tipo (or) and ()
+        //Productos que satisfagan el criterio de búsqueda y que sean activos
+        $products = Product::where(function ($query) use ($search) {
+            $query->where('id', 'like', "%$search%")
+                ->orWhere('alt_code', 'like', "%$search%")
+                ->orWhere('name', 'like', "%$search%")
+                ->orWhere('price', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%");
+        })->where('active', true)
+            ->paginate(9);
+
+
+        //Contenido de los banners inferiores
+
+        //banner izquierdo
+        $banner1Title = "Enlaces útiles";
+        $banner1Links = [
+            ['title' => 'Categorías de la tienda', 'url' => 'categories.index']
+        ];
+
+        //Banner derecho
+        $banner2Title = "Te puede interesar";
+        $banner2Links = [
+            ['title' => 'Home', 'url' => 'home']
+        ];
+
+        return view('layouts.product.product-report', [
+            'sectionTitle' => "Productos: Búsqueda",
+            'pageTitle' => "Resultados de: $search",
+            'products' => $products,
+            'banner1Title' => $banner1Title,
+            'banner1Links' => $banner1Links,
+            'banner2Title' => $banner2Title,
+            'banner2Links' => $banner2Links
+        ]);
     }
 }

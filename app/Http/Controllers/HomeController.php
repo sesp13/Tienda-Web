@@ -27,7 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::take(6)->orderBy('created_at', 'desc')->get()->load('category');
+        $products = Product::take(6)
+            ->where('active', true)->orderBy('created_at', 'desc')
+            ->get()->load('category');
 
         //banner izquierdo
         $banner1Title = "Enlaces útiles";
@@ -53,7 +55,7 @@ class HomeController extends Controller
             'banner2Title' => $banner2Title,
             'banner2Links' => $banner2Links,
             'searchMessage' => "Buscar Productos",
-            'searchUrl' => 'admin.users.load',
+            'searchUrl' => 'products.load-search',
             'categories' => Category::take(10)->get(),
             'products' => $products
         ]);
