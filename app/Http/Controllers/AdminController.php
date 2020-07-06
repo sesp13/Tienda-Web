@@ -339,13 +339,26 @@ class AdminController extends Controller
     */
     public function products()
     {
-        $products = Product::orderBy('updated_at','desc')->paginate(10);
+        $products = Product::orderBy('updated_at', 'desc')->paginate(10);
+
+        //Propiedades para los banners inferiores
+        $banner1Title = "Enlaces útiles";
+        $banner1Links = [];
+
+        $banner2Title = "Te puede interesar";
+        $banner2Links = [
+            ['title' => "Panel de administrador", 'url' => 'admin.index']
+        ];
 
         return view('admin.products.index', [
             'products' => $products,
             'searchMessage' => 'Buscar productos',
             'searchUrl' => 'admin.products.load-search',
-            'search' => ''
+            'search' => '',
+            'banner1Title' => $banner1Title,
+            'banner1Links' => $banner1Links,
+            'banner2Title' => $banner2Title,
+            'banner2Links' => $banner2Links
         ]);
     }
 

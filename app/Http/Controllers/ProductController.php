@@ -16,6 +16,9 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->middleware('active');
+        $this->middleware('product-active', [
+            'only' => ['show']
+        ]);
     }
 
     /* 
@@ -23,7 +26,8 @@ class ProductController extends Controller
     */
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->paginate(9);
+        $products = Product::where('active', true)
+            ->orderBy('created_at', 'desc')->paginate(9);
 
         //Contenido de los banners inferiores
 
@@ -140,7 +144,6 @@ class ProductController extends Controller
         })->where('active', true)
             ->paginate(9);
 
-
         //Contenido de los banners inferiores
 
         //banner izquierdo
@@ -180,8 +183,8 @@ class ProductController extends Controller
             ->where('id', '!=', $product->id)
             ->inRandomOrder()
             ->get()->load('category');
-        
-                //Contenido de los banners inferiores
+
+        //Contenido de los banners inferiores
 
         //banner izquierdo
         $banner1Title = "Enlaces útiles";
@@ -190,8 +193,11 @@ class ProductController extends Controller
         ];
 
         //Rutas exclusivas del administrador
-        if(Auth::user()->role == "ROLE_ADMIN"){
-            array_push($banner1Links, ['title' => '[ADMIN] Panel de productos', 'url' => 'admin.products']);
+        $user = Auth::user();
+        if (isset($user)) {
+            if ($user->role == "ROLE_ADMIN") {
+                array_push($banner1Links, ['title' => '[ADMIN] Panel de productos', 'url' => 'admin.products']);
+            }
         }
 
         //Banner derecho

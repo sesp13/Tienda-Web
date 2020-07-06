@@ -2,7 +2,7 @@
     <thead class="thead-dark">
         <tr>
             <th>Id</th>
-            <th>Código Alterno</th>
+            <th>Cod Alterno</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Stock</th>
@@ -15,7 +15,7 @@
     <tr>
         <td>{{ $product->id }}</td>
         <td>{{ $product->alt_code != null ? $product->alt_code : "Sin código"}}</td>
-        <td>{{ $product->name }}</td>
+        <td class="cast-title-table">{{ $product->name }}</td>
         <td class="currency">{{ $product->price }}</td>
         <td>{{ $product->stock }}</td>
         <td>{{ $product->category != null ? $product->category->name : "Sin categoría" }}</td>

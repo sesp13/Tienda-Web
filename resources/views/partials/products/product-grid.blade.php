@@ -8,11 +8,11 @@
             <div class="card-body">
                 @if($product->image_path)
                 <div class="photo-product">
-                    <img src="{{ route('products.get-image',$product->image_path) }}" alt="">
+                    <img src="{{ route('products.get-image',$product->image_path) }}" alt="Imagen de producto">
                 </div>
                 @else
                 <div class="photo-product">
-                    <img src="https://previews.123rf.com/images/themoderncanvas/themoderncanvas1605/themoderncanvas160500008/56739040-dise%C3%B1o-de-iconos-de-productos-org%C3%A1nicos-s%C3%ADmbolo-del-producto-org%C3%A1nico-sello-de-producto-org%C3%A1nico-con-dise%C3%B1o-de-for.jpg" alt="Imagen por defecto">
+                    <img src="https://previews.123rf.com/images/themoderncanvas/themoderncanvas1605/themoderncanvas160500008/56739040-dise%C3%B1o-de-iconos-de-productos-org%C3%A1nicos-s%C3%ADmbolo-del-producto-org%C3%A1nico-sello-de-producto-org%C3%A1nico-con-dise%C3%B1o-de-for.jpg" alt="Imagen de producto">
                 </div>
                 @endif
                 <hr>

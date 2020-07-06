@@ -14,10 +14,13 @@
                 <div class="card-body">
                     @include('partials.search')
                     @include('partials.message')
+                    <div class="my-3 float-left">
+                        <p>Total de productos en esta página: {{ count($products) }}</p>
+                    </div>
                     <div class="my-3 float-right">
                         <a href="{{ route('admin.products.create') }}" class="btn btn-success">Crear nuevo producto</a>
-                        <div class="clearfix"></div>
                     </div>
+                    <div class="clearfix"></div>
                     @include('partials.admin.product-table')
                 </div>
                 <div class="justify-content-center d-flex">
@@ -29,7 +32,7 @@
             </div>
         </div>
     </div>
-
+    @include('partials.down-banners-2')
 </div>
 </div>
 
