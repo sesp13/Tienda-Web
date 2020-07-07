@@ -3,19 +3,19 @@
         <tr>
             <th>Id</th>
             <th>Nombre</th>
-            <th>Precio</th>
+            <th class="text-left">Precio</th>
             <th>Stock</th>
-            <th>Categoría</th>
+            <th class="text-left">Categoría</th>
             <th>Habilitado</th>
             <th>Acciones</th>
         </tr>
     </thead>
     @foreach($products as $product)
     <tr>
-        <td>{{ $product->id }}</td>
+        <td class="text-center">{{ $product->id }}</td>
         <td class="cast-title-table">{{ $product->name }}</td>
         <td class="currency">{{ $product->price }}</td>
-        <td>{{ $product->stock }}</td>
+        <td class="text-center">{{ $product->stock }}</td>
         <td>{{ $product->category != null ? $product->category->name : "Sin categoría" }}</td>
         @if($product->active)
         <td class="bg-success text-white text-center border border-white rounded">Si</td>
@@ -24,14 +24,13 @@
         @endif
         <td class="p-table-buttons">
             <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning">
-                <i class="fa fa-pencil"></i>  Editar
+                <i class="fa fa-pencil"></i> Editar
             </a>
             <!-- Modal de información -->
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalProductView-{{ $product->id }}">
-                <i class="fa fa-eye"></i>  Ver Detalles
+                <i class="fa fa-eye"></i> Ver Detalles
             </button>
 
-            <!-- Modal -->
             <div class="modal fade" id="modalProductView-{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -86,10 +85,9 @@
 
             <!-- Modal de eliminación -->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalProductDelete-{{ $product->id }}">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>  Eliminar
+                <i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar
             </button>
 
-            <!-- Modal -->
             <div class="modal fade" id="modalProductDelete-{{ $product->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

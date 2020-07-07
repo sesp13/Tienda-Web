@@ -1,5 +1,4 @@
 //Función para convertir todos los números en formato de moneda
-
 function convertCurrency() {
     $(".currency").each(function() {
         let number = $(this).text();
@@ -27,8 +26,8 @@ castTitle();
 function castTitleTable() {
     $(".cast-title-table").each(function() {
         let text = $(this).text();
-        if(text.length > 18){
-            text = text.substring(0,18) + "..";
+        if(text.length > 30){
+            text = text.substring(0,30) + "..";
             $(this).text(text);
         }
     });

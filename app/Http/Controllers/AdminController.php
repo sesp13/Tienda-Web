@@ -379,7 +379,7 @@ class AdminController extends Controller
             return redirect()->route('admin.products.search', $search)
                 ->with('message', "Cambio de estado exitoso");
         } else {
-            return back()->with('message', "Cambio de estado exitoso");
+            return back()->with('message', "{$product->name} ha cambiado de estado satisfactoriamente");
         }
     }
 

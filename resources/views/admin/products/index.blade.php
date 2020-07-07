@@ -15,7 +15,17 @@
                     @include('partials.search')
                     @include('partials.message')
                     <div class="my-3 float-left">
-                        <p>Total de productos en esta página: {{ count($products) }}</p>
+                        <p class="float-left">Total de productos en esta página: {{ count($products) }}</p>
+                        <!-- <form action="" class="ml-3 form-inline float-left">
+                        <div class="form-group">
+                            <select name="" id="" class="form-control">
+                                <option value="">Por precio</option>
+                                <option value="">Por marca</option>
+                                <option value="">Por imagen</option>
+                            </select>
+                        </div>
+                            <input type="submit" class="ml-3 btn btn-success" value="Aplicar">
+                        </form> -->
                     </div>
                     <div class="my-3 float-right">
                         <a href="{{ route('admin.products.create') }}" class="btn btn-success">Crear nuevo producto</a>
