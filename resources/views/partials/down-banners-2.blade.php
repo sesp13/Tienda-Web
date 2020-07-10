@@ -1,5 +1,5 @@
 <div class="row my-3">
-    <div class="col-6">
+    <div class="col-sm-12 col-md-6">
         <div class="card">
             <div class="card-header">
                 {{ $banner1Title }}
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-sm-12 col-md-6 mt-3 mt-md-0">
         <div class="card">
             <div class="card-header">
                 {{ $banner2Title }}

@@ -14,6 +14,7 @@
                 <div class="card-body">
                     <a href="{{ route('home') }}">Inicio</a>
                     @include('partials.search-lines')
+                    <a href="{{ route('products.without-categorie') }}" class="mt-3 d-block">Productos sin categoría</a>
                 </div>
             </div>
         </div>

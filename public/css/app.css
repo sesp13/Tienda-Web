@@ -14121,6 +14121,18 @@ a.text-dark:focus {
   height: 500px;
 }
 
+@media (max-width: 768px) {
+  .photo-product-single {
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .photo-product-single {
+    height: 250px;
+  }
+}
+
 .p-title {
   text-align: center;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
