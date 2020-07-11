@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Product;
+use App\Models\Product;
 use Closure;
 
 class ProductActive

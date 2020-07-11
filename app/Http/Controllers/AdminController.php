@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
-use App\Product;
+use App\Models\Category;
+use App\Models\Product;
 use App\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Category;
-use App\Product;
+use App\Models\Category;
+use App\Models\Product;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
