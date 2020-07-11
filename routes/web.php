@@ -30,7 +30,7 @@ Route::get('/admin/usuarios', 'AdminController@users')->name('admin.users');
 Route::post('/admin/usuarios/buscar', "AdminController@loadSearch")->name('admin.users.load');
 Route::get('/admin/usuarios/buscar/{search}', 'AdminController@userSearch')->name('admin.users.search');
 Route::get('admin/usuarios/cambiar-estado/{id}/{search?}', 'AdminController@changeUserState')
-    ->name('admin.change-state');
+    ->name('admin.user.change-state');
 
 // Rutas de reportes de usuario para administradores
 Route::get('/admin/usuarios/sin-confirmar', 'AdminController@usersUnconfirmed')->name('admin.users-unconfirmed');

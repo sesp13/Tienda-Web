@@ -111,9 +111,9 @@ class AdminController extends Controller
 
         //Search se usa para devolverse a la vista de búsqueda de usuario
         if ($search != null) {
-            return redirect()->route('admin.users.search', $search)->with('message', "Cambio de estado exitoso");
+            return redirect()->route('admin.users.search', $search)->with('message', "{$user->name} {$user->surname} ha cambado de estado exitosamente");
         } else {
-            return back()->with('message', "Cambio de estado exitoso");
+            return back()->with('message', "{$user->name} {$user->surname} ha cambado de estado exitosamente");
         }
     }
 
