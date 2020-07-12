@@ -8,23 +8,9 @@ use App\User;
     Esta clase abstrae la lógica necesaria cuando se
     interactúa con la base de datos para obtener usuarios
 */
+
 class UserLogic
 {
-
-    /*
-        Retorna todos los usuarios
-        opcional: parámetro de paginación
-    */
-    public static function getAll(int $pagination = null)
-    {
-        if ($pagination != null) {
-            $users = User::where('role', 'ROLE_USER')->paginate($pagination);
-        } else {
-            $users = User::where('role', 'ROLE_USER')->get();
-        }
-
-        return $users;
-    }
 
     //LÓGICA PARA OBTENER 1 USUARIO 
 
@@ -49,6 +35,21 @@ class UserLogic
     }
 
     //LÓGICA PARA OBTENER UN CONJUNTO DE USUARIOS
+
+    /*
+        Retorna todos los usuarios
+        opcional: parámetro de paginación
+    */
+    public static function getAllActive(int $pagination = null)
+    {
+        if ($pagination != null) {
+            $users = User::where('role', 'ROLE_USER')->paginate($pagination);
+        } else {
+            $users = User::where('role', 'ROLE_USER')->get();
+        }
+
+        return $users;
+    }
 
     /*
         Retorna los usuarios de acuerdo a una búsqueda

@@ -33,7 +33,7 @@ class AdminController extends Controller
     //Devuelve una vista dedicada para los usuarios de la plataforma
     public function users()
     {
-        $users = UserLogic::getAll(10);
+        $users = UserLogic::getAllActive(10);
 
         //Urls para el banner inferior Vista (partials.down-banners-2)
         //Estructura del array
