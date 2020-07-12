@@ -9,13 +9,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Logic\UserLogic;
 
 class AdminController extends Controller
 {
-    // Propiedades para la búsqueda de usuarios
-    private $loadUrl = 'admin.users.load';
-    private $searchUrl = 'admin.users.search';
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -35,7 +32,7 @@ class AdminController extends Controller
     //Devuelve una vista dedicada para los usuarios de la plataforma
     public function users()
     {
-        $users = User::where('role', 'ROLE_USER')->paginate(6);
+        $users = UserLogic::getAll(10);
 
         //Urls para el banner inferior Vista (partials.down-banners-2)
         //Estructura del array
@@ -59,7 +56,7 @@ class AdminController extends Controller
         return view('admin.users.index', [
             'users' => $users,
             'searchMessage' => "Buscar Usuarios",
-            'searchUrl' => $this->loadUrl,
+            'searchUrl' => "admin.users.load",
             'search'  => '',
             'banner1Title' => $banner1Title,
             'banner1Links' => $banner1Links,
@@ -77,7 +74,7 @@ class AdminController extends Controller
     {
         $search = $request->input('search');
 
-        return redirect()->route($this->searchUrl, $search);
+        return redirect()->route('admin.users.search', $search);
     }
 
     /*
@@ -86,11 +83,8 @@ class AdminController extends Controller
     */
     public function userSearch(string $search)
     {
-        $users = User::where('nit', 'like', "%$search%")
-            ->orWhere('name', 'like', "%$search%")
-            ->orWhere('surname', 'like', "%$search%")
-            ->orWhere('email', 'like', "%$search%")
-            ->paginate(10);
+
+        $users = UserLogic::getBySearch($search, 10);
 
         return view('admin..users.users-search', [
             'search' => $search,
@@ -98,20 +92,13 @@ class AdminController extends Controller
         ]);
     }
 
-    //Cambia la propiedad active del usuario, para saber si está habilitado o no
     public function changeUserState(int $id, string $search = null)
     {
-        $user = User::findOrFail($id);
-
-        $state = $user->active;
-
-        $user->active = !$state;
-
-        $user->update();
+        $user = UserLogic::changeState($id);
 
         //Search se usa para devolverse a la vista de búsqueda de usuario
         if ($search != null) {
-            return redirect()->route('admin.users.search', $search)->with('message', "{$user->name} {$user->surname} ha cambado de estado exitosamente");
+            return redirect()->route('admin.users.search', $search)->with('message', "{$user->name} {$user->surname} ha cambiado de estado exitosamente");
         } else {
             return back()->with('message', "{$user->name} {$user->surname} ha cambado de estado exitosamente");
         }
@@ -124,9 +111,7 @@ class AdminController extends Controller
     */
     public function usersUnconfirmed()
     {
-        $users = User::where('role', 'ROLE_USER')
-            ->where('confirmed', false)
-            ->paginate(10);
+        $users = UserLogic::getUnconfirmed(10);
 
         $sectionTitle = "Usuarios sin confirmar";
         $pageTitle = "Usuarios sin confirmar";
@@ -143,9 +128,7 @@ class AdminController extends Controller
     */
     public function usersConfirmed()
     {
-        $users = User::where('role', 'ROLE_USER')
-            ->where('confirmed', true)
-            ->paginate(10);
+        $users = UserLogic::getConfirmed(10);
 
         $sectionTitle = "Usuarios confirmados";
         $pageTitle = "Usuarios confirmados";
@@ -162,9 +145,7 @@ class AdminController extends Controller
     */
     public function usersInactive()
     {
-        $users = User::where('role', 'ROLE_USER')
-            ->where('active', false)
-            ->paginate(10);
+        $users = UserLogic::getInactive(10);
 
         $sectionTitle = "Usuarios deshabilitados";
         $pageTitle = "Usuarios deshabilitados";
@@ -181,9 +162,7 @@ class AdminController extends Controller
     */
     public function usersActive()
     {
-        $users = User::where('role', 'ROLE_USER')
-            ->where('active', true)
-            ->paginate(10);
+        $users = UserLogic::getActive(10);
 
         $sectionTitle = "Usuarios hablitados";
         $pageTitle = "Usuarios habilitados";

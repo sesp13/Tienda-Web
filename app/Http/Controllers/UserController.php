@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\UserLogic;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,16 +14,17 @@ class UserController extends Controller
         //Proetcción de rutas para usuario autenticado o administrador
         $this->middleware('auth')->only('edit', 'update', 'profile');
         $this->middleware('userOrAdmin')->only('edit', 'update');
-        $this->middleware('active')->except('unconfirmed','inactive');
+        $this->middleware('active')->except('unconfirmed', 'inactive');
     }
 
     public function edit(int $id)
     {
         //Saber si el usuario autenticado es admin o no
-        $admin = Auth::user()->role == "ROLE_ADMIN" ? true : false;
+        $user = Auth::user();
+        $admin = UserLogic::isAdmin($user);
 
         //Conseguir el usuario asociado con el id de la url
-        $user = User::findOrFail($id);
+        $user = UserLogic::getById($id);
 
         return view('user.edit', [
             'user' => $user,
@@ -34,7 +36,7 @@ class UserController extends Controller
     //Actualizamos el usuario en la DB
     public function update(Request $request)
     {
-        $user = User::find($request->input('id'));
+        $user = UserLogic::getById($request->input('id'));
 
         // Validar los datos
         $data = $request->validate([
@@ -52,8 +54,7 @@ class UserController extends Controller
     public function confirm(string $token)
     {
         //Obtencion del usuario por medio de su token de correo
-        $user = User::where('email_token', $token)
-            ->firstOrFail();
+        $user = UserLogic::getByEmailToken($token);
 
         //Actualizacion de campos
         $user->email_token = null;
