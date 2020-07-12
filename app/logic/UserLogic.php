@@ -3,7 +3,6 @@
 namespace App\Logic;
 
 use App\User;
-use Illuminate\Database\Eloquent\Collection;
 
 /*
     Esta clase abstrae la lógica necesaria cuando se
@@ -27,7 +26,7 @@ class UserLogic
         return $users;
     }
 
-    //LÓGICA PARA OBTENER UN USUARIO 
+    //LÓGICA PARA OBTENER 1 USUARIO 
 
     /*
         Retorna un usuario por su id
@@ -77,6 +76,7 @@ class UserLogic
 
     /*
         Retorna los usuarios confirmados
+        opcional: parámetro de paginación
     */
     public static function getConfirmed(int $pagination = null)
     {
@@ -113,6 +113,7 @@ class UserLogic
 
     /*
         Retorna los usuarios activos (habilitados)
+        opcional: parámetro de paginación
     */
     public static function getActive(int $pagination = null)
     {
@@ -129,6 +130,7 @@ class UserLogic
 
     /*
         Retorna los usuarios inactivos (inhabilitados)
+        opcional: parámetro de paginación
     */
     public static function getInactive(int $pagination = null)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\CategoryLogic;
 use App\Models\Category;
 use App\Models\Product;
 use App\User;
@@ -181,7 +182,7 @@ class AdminController extends Controller
     */
     public function categories()
     {
-        $categories = Category::paginate(7);
+        $categories = CategoryLogic::getAll(7);
 
         //Urls para el banner lateral Vista (partials.vertical-banners-2)
         //Estructura del array
@@ -247,7 +248,7 @@ class AdminController extends Controller
     */
     public function categoryEdit(int $id)
     {
-        $category = Category::findOrFail($id);
+        $category = CategoryLogic::getById($id);
 
         return view('admin.categories.create', [
             'category' => $category,
@@ -261,7 +262,7 @@ class AdminController extends Controller
     */
     public function categoryUpdate(Request $request)
     {
-        $category = Category::find($request->input('id'));
+        $category = CategoryLogic::getById($request->input('id'));
 
         // Validar los datos
         $data = $request->validate([
@@ -280,7 +281,7 @@ class AdminController extends Controller
     */
     public function categoryDelete(int $id)
     {
-        $category = Category::findOrFail($id);
+        $category = CategoryLogic::getById($id);
 
         $category->delete();
 
@@ -302,8 +303,7 @@ class AdminController extends Controller
     */
     public function categorySearch(string $search)
     {
-        $categories = Category::where('name', 'like', "%$search%")
-            ->paginate(5);
+        $categories = CategoryLogic::getBySearch($search, 5);
 
         return view('admin.categories.categories-search', [
             'categories' => $categories,

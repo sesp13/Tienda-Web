@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\CategoryLogic;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class CategoryController extends Controller
     */
     public function index()
     {
-        $categories = Category::paginate(5);
+        $categories = CategoryLogic::getAll(5);
 
         return view('category.index', [
             'categories' => $categories,
@@ -35,8 +36,7 @@ class CategoryController extends Controller
 
     public function categorySearch(string $search)
     {
-        $categories = Category::where('name', 'like', "%$search%")
-            ->paginate(5);
+        $categories = CategoryLogic::getBySearch($search, 5);
 
         return view('category.search',[
             'categories' => $categories,
