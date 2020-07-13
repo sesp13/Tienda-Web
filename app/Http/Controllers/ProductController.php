@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\CategoryLogic;
+use App\Logic\ProductLogic;
+use App\Logic\UserLogic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
-use App\Models\Product;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -26,8 +27,7 @@ class ProductController extends Controller
     */
     public function index()
     {
-        $products = Product::where('active', true)
-            ->orderBy('created_at', 'desc')->paginate(9);
+        $products = ProductLogic::getAllActiveOrderByCustom('created_at', true, 9);
 
         //Contenido de los banners inferiores
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
         //Rutas exclusivas del administrador
-        if ($user != null && $user->role == "ROLE_ADMIN") {
+        if ($user != null && UserLogic::isAdmin($user)) {
             $banner1Links[] = ['title' => '[ADMIN] Panel de categorías', 'url' => 'admin.categories'];
         }
 
@@ -64,12 +64,10 @@ class ProductController extends Controller
     /*
       Retorna una vista con todos los productos asociados a una categoría
     */
-    public function getProductsByCategory(int $id)
+    public function getProductsByCategory(int $categoryId)
     {
-        $category = Category::findOrFail($id);
-        $products = Product::where('category_id', $category->id)
-            ->where('active', true)
-            ->paginate(9);
+        $category = CategoryLogic::getById($categoryId);
+        $products = ProductLogic::getActiveByCategory($categoryId, 9);
 
         //Contenido de los banners inferiores
 
@@ -82,7 +80,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
         //Rutas exclusivas del administrador
-        if ($user != null && $user->role == "ROLE_ADMIN") {
+        if ($user != null && UserLogic::isAdmin($user)) {
             $banner1Links[] = ['title' => '[ADMIN] Panel de categorías', 'url' => 'admin.categories'];
         }
 
@@ -108,9 +106,7 @@ class ProductController extends Controller
     */
     public function getProductsWithoutCategory()
     {
-        $products = Product::where('category_id', null)
-            ->where('active', true)
-            ->paginate(9);
+        $products = ProductLogic::getActiveWithoutCategory(9);
 
         //Contenido de los banners inferiores
 
@@ -123,7 +119,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
         //Rutas exclusivas del administrador
-        if ($user != null && $user->role == "ROLE_ADMIN") {
+        if ($user != null && UserLogic::isAdmin($user)) {
             $banner1Links[] = ['title' => '[ADMIN] Panel de categorías', 'url' => 'admin.categories'];
         }
 
@@ -174,16 +170,7 @@ class ProductController extends Controller
     */
     public function search(string $search)
     {
-        // Condicional tipo (or) and ()
-        //Productos que satisfagan el criterio de búsqueda y que sean activos
-        $products = Product::where(function ($query) use ($search) {
-            $query->where('id', 'like', "%$search%")
-                ->orWhere('alt_code', 'like', "%$search%")
-                ->orWhere('name', 'like', "%$search%")
-                ->orWhere('price', 'like', "%$search%")
-                ->orWhere('description', 'like', "%$search%");
-        })->where('active', true)
-            ->paginate(9);
+        $products = ProductLogic::getActiveBySearch($search, 9);
 
         //Contenido de los banners inferiores
 
@@ -216,14 +203,9 @@ class ProductController extends Controller
 
     public function show(int $id)
     {
-        $product = Product::findOrFail($id);
+        $product = ProductLogic::getById($id);
 
-        $products = Product::take(3)
-            ->where('active', true)
-            ->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id)
-            ->inRandomOrder()
-            ->get()->load('category');
+        $products = ProductLogic::getRandomActiveWithoutOneProduct(3, $product);
 
         //Contenido de los banners inferiores
 
@@ -236,7 +218,7 @@ class ProductController extends Controller
         //Rutas exclusivas del administrador
         $user = Auth::user();
         if (isset($user)) {
-            if ($user->role == "ROLE_ADMIN") {
+            if (UserLogic::isAdmin($user)) {
                 array_push($banner1Links, ['title' => '[ADMIN] Panel de productos', 'url' => 'admin.products']);
             }
         }

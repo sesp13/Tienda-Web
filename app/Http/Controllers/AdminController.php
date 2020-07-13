@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Logic\CategoryLogic;
+use App\Logic\ProductLogic;
 use App\Models\Category;
 use App\Models\Product;
 use App\User;
@@ -318,7 +319,7 @@ class AdminController extends Controller
     */
     public function products()
     {
-        $products = Product::orderBy('updated_at', 'desc')->paginate(10);
+        $products = ProductLogic::getAllOrderByCustom('updated_at', false, 10);
 
         //Propiedades para los banners inferiores
         $banner1Title = "Enlaces útiles";
@@ -347,11 +348,8 @@ class AdminController extends Controller
     */
     public function changeProductState(int $id, string $search = null)
     {
-        $product = Product::findOrFail($id);
 
-        $product->active = !$product->active;
-
-        $product->update();
+        $product = ProductLogic::changeState($id);
 
         //Search se usa para devolverse a la vista de búsqueda de producto
         if ($search != null) {
@@ -379,12 +377,7 @@ class AdminController extends Controller
     */
     public function productSearch(string $search)
     {
-        $products = Product::where('id', 'like', "%$search%")
-            ->orWhere('alt_code', 'like', "%$search%")
-            ->orWhere('name', 'like', "%$search%")
-            ->orWhere('price', 'like', "%$search%")
-            ->orWhere('description', 'like', "%$search%")
-            ->paginate(10);
+        $products = ProductLogic::getBySearch($search, 10);
 
         return view('admin.products.products-search', [
             'products' => $products,
@@ -398,7 +391,7 @@ class AdminController extends Controller
     public function productCreate()
     {
         $product = new Product();
-        $categories = Category::all();
+        $categories = CategoryLogic::getAll();
 
         return view('admin.products.create', [
             'product' => $product,
@@ -427,31 +420,7 @@ class AdminController extends Controller
             'active' => [],
         ]);
 
-        //Guardado del producto
-        $product = new Product();
-
-        $product->alt_code = $data['alt_code'];
-        $product->category_id = $data['category_id'];
-        $product->name = $data['name'];
-        $product->description = $data['description'];
-        $product->price = $data['price'];
-        $product->stock = $data['stock'];
-        $product->active = $data['active'];
-
-        if (isset($data['image_path'])) {
-            $image_path = $data['image_path'];
-        } else {
-            $image_path = null;
-        }
-
-        //Guardado de la imagen
-        if ($image_path) {
-            $image_path_name = time() . $image_path->getClientOriginalName();
-            Storage::disk('product_images')->put($image_path_name, File::get($image_path));
-            $product->image_path = $image_path_name;
-        }
-
-        $product->save();
+        ProductLogic::save($data);
 
         return redirect()->route('admin.products')->with('message', 'producto creado correctamente');
     }
@@ -461,8 +430,8 @@ class AdminController extends Controller
     */
     public function productEdit(int $id)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $product = ProductLogic::getById($id);
+        $categories = CategoryLogic::getAll();
 
         return view('admin.products.create', [
             'product' => $product,
@@ -480,7 +449,7 @@ class AdminController extends Controller
     {
         $id = $request->input('id');
 
-        $product = Product::findOrFail($id);
+        $product = ProductLogic::getById($id);
 
         $data = $request->validate([
             'alt_code' => ['nullable', 'unique:products,alt_code,' . $id],
@@ -493,31 +462,7 @@ class AdminController extends Controller
             'active' => [],
         ]);
 
-        $product->alt_code = $data['alt_code'];
-        $product->category_id = $data['category_id'];
-        $product->name = $data['name'];
-        $product->description = $data['description'];
-        $product->price = $data['price'];
-        $product->stock = $data['stock'];
-        $product->active = $data['active'];
-
-        if (isset($data['image_path'])) {
-            $image_path = $data['image_path'];
-        } else {
-            $image_path = null;
-        }
-
-        //Guardado de la imagen
-        if ($image_path) {
-            if ($product->image_path != null) {
-                Storage::disk('product_images')->delete($product->image_path);
-            }
-            $image_path_name = time() . $image_path->getClientOriginalName();
-            Storage::disk('product_images')->put($image_path_name, File::get($image_path));
-            $product->image_path = $image_path_name;
-        }
-
-        $product->update();
+        ProductLogic::update($product, $data);
 
         return redirect()->route('admin.products')->with('message', "El producto {$product->name} ha sido editado correctamente");
     }
@@ -527,14 +472,8 @@ class AdminController extends Controller
     */
     public function productDelete(int $id)
     {
-        $product = Product::findOrFail($id);
-
-        if ($product->image_path != null) {
-            Storage::disk('product_images')->delete($product->image_path);
-        }
-
-        $product->delete();
-
+        $product = ProductLogic::delete($id);
+        
         return redirect()->route('admin.products')->with('message', "El producto {$product->name} ha sido eliminado correctamente");
     }
 }

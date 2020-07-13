@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\ProductLogic;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -27,9 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::take(6)
-            ->where('active', true)->orderBy('created_at', 'desc')
-            ->get()->load('category');
+        $products = ProductLogic::getSomeOrderByCustom(6, 'created_at', false);
 
         //banner izquierdo
         $banner1Title = "Enlaces útiles";
