@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\CategoryLogic;
 use App\Logic\ProductLogic;
 use App\Models\Category;
 use App\Models\Product;
@@ -55,7 +56,7 @@ class HomeController extends Controller
             'banner2Links' => $banner2Links,
             'searchMessage' => "Buscar Productos",
             'searchUrl' => 'products.load-search',
-            'categories' => Category::take(10)->get(),
+            'categories' => CategoryLogic::getSome(10),
             'products' => $products
         ]);
     }

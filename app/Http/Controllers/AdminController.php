@@ -235,11 +235,7 @@ class AdminController extends Controller
             'name' => ['required', 'string', 'max:255', "unique:categories,name"]
         ]);
 
-        $category = new Category();
-
-        $category->name = $data['name'];
-
-        $category->save();
+        CategoryLogic::save($data);
 
         return redirect()->route('admin.categories')->with('message', "Categoría guardada correctamente");
     }
@@ -269,12 +265,10 @@ class AdminController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', "unique:categories,name," . $category->id]
         ]);
+        
+        CategoryLogic::update($category, $data);
 
-        $category->name = $data['name'];
-
-        $category->update();
-
-        return redirect()->route('admin.categories')->with('message', "Categoría actualizada correctamente");
+        return redirect()->route('admin.categories')->with('message', "La categoría  {$category->name} ha sido actualizada correctamente");
     }
 
     /*
@@ -282,9 +276,8 @@ class AdminController extends Controller
     */
     public function categoryDelete(int $id)
     {
-        $category = CategoryLogic::getById($id);
 
-        $category->delete();
+        $category = CategoryLogic::delete($id);
 
         return redirect()->route('admin.categories')
             ->with('message', "La categoría {$category->name} ha sido eliminada correctamente");
