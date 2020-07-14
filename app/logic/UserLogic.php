@@ -149,6 +149,18 @@ class UserLogic
     //LÓGICA QUE ABSTRAE UNA FUNCIONALIDAD
 
     /*
+        Actualiza un usuario en la base de datos
+    */
+    public static function update(User $user, array $data): void
+    {
+        $user->name = $data['name'];
+        $user->surname = $data['surname'];
+        $user->email = $data['email'];
+
+        $user->update();
+    }
+
+    /*
         Si el usuario es administrador retorna true, 
         en caso contrario retorna false
     */
@@ -175,5 +187,17 @@ class UserLogic
         $user->update();
 
         return $user;
+    }
+
+    /*
+        Confirma el correo de un usuario
+    */
+    public static function confirm(User $user): void
+    {
+        $user->email_token = null;
+        $user->confirmed = true;
+        $user->active = true;
+
+        $user->update();
     }
 }

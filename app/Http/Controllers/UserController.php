@@ -45,8 +45,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', "unique:users,email," . $user->id],
         ]);
 
-        //Seteo de los campos del usuario
-        $update = $user->update($data);
+        UserLogic::update($user, $data);
 
         return back()->with('message', "Usuario actualizado correctamente");
     }
@@ -56,12 +55,7 @@ class UserController extends Controller
         //Obtencion del usuario por medio de su token de correo
         $user = UserLogic::getByEmailToken($token);
 
-        //Actualizacion de campos
-        $user->email_token = null;
-        $user->confirmed = true;
-        $user->active = true;
-
-        $user->update();
+        UserLogic::confirm($user);
 
         return view('user.confirm', [
             'user' => $user
