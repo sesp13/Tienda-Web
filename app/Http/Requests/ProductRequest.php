@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use App\Logic\UserLogic;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class UserEditRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,13 @@ class UserEditRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = Auth::user();
+        $admin = UserLogic::isAdmin($user);
+        if ($admin) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -25,11 +32,13 @@ class UserEditRequest extends FormRequest
     public function rules()
     {
         $id = request()->input('id');
-        
+
         return [
+            'alt_code' => ['nullable', 'unique:products,alt_code,' . $id],
             'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', "unique:users,email," . $id],
+            'price' => ['required', 'numeric'],
+            'image_path' => ['image', 'mimes:jpg,jpeg,png,gif'],
+            'stock' => ['numeric', 'required', '']
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Logic\CategoryLogic;
 use App\Logic\ProductLogic;
 use App\Models\Category;
@@ -399,19 +400,10 @@ class AdminController extends Controller
         se retorna una redireccion a la ruta de
         la vista principal de productos en la plataforma
     */
-    public function productStore(Request $request)
+    public function productStore(ProductRequest $request)
     {
 
-        $data = $request->validate([
-            'alt_code' => ['nullable', 'unique:products,alt_code'],
-            'name' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'numeric'],
-            'image_path' => ['image', 'mimes:jpg,jpeg,png,gif'],
-            'stock' => ['numeric', 'required', ''],
-            'category_id' => [],
-            'description' => [],
-            'active' => [],
-        ]);
+        $data = $request->all();
 
         ProductLogic::save($data);
 
@@ -438,22 +430,13 @@ class AdminController extends Controller
         Actualiza un producto en la base de datos,
         si se tiene éxito, se retorna a la ruta del panel de productos
     */
-    public function productUpdate(Request $request)
+    public function productUpdate(ProductRequest $request)
     {
         $id = $request->input('id');
 
         $product = ProductLogic::getById($id);
 
-        $data = $request->validate([
-            'alt_code' => ['nullable', 'unique:products,alt_code,' . $id],
-            'name' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'numeric'],
-            'image_path' => ['image', 'mimes:jpg,jpeg,png,gif'],
-            'stock' => ['numeric', 'required', ''],
-            'category_id' => [],
-            'description' => [],
-            'active' => [],
-        ]);
+        $data = $request->all();
 
         ProductLogic::update($product, $data);
 
