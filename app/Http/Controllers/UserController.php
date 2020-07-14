@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserEditRequest;
 use App\Logic\UserLogic;
 use App\User;
 use Illuminate\Http\Request;
@@ -34,17 +35,12 @@ class UserController extends Controller
     }
 
     //Actualizamos el usuario en la DB
-    public function update(Request $request)
+    public function update(UserEditRequest $request)
     {
         $user = UserLogic::getById($request->input('id'));
 
-        // Validar los datos
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'surname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', "unique:users,email," . $user->id],
-        ]);
-
+        $data = $request->all();
+        
         UserLogic::update($user, $data);
 
         return back()->with('message', "Usuario actualizado correctamente");
