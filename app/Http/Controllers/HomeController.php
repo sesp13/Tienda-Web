@@ -47,7 +47,8 @@ class HomeController extends Controller
         $banner2Links = [
             ['title' => 'Productos', 'url' => 'products.index'],
             ['title' => 'Categorías de la tienda', 'url' => 'categories.index'],
-            ['title' => 'Productos baratos', 'url' => 'products.cheap']
+            ['title' => 'Productos baratos', 'url' => 'products.cheap'],
+            ['title' => 'Productos costosos', 'url' => 'products.expensive']
         ];
 
         return view('home', [
