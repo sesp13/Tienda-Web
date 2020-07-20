@@ -84,6 +84,7 @@ Route::get('/productos', "ProductController@index")->name('products.index');
 Route::get('/producto/{id}', "ProductController@show")->name('products.show');
 Route::post('/productos/buscar', "ProductController@loadSearch")->name('products.load-search');
 Route::get('/productos/buscar/{search}', "ProductController@search")->name('products.search');
+Route::get('/productos/baratos', "ProductController@getCheapProducts")->name('products.cheap');
 Route::get('/categoria/{categoryId}', "ProductController@getProductsByCategory")->name('products.get-by-categorie');
 Route::get('/sin-categoria', "ProductController@getProductsWithoutCategory")->name('products.without-categorie');
 Route::get('/imagen-producto/{filename?}', "ProductController@getImage")->name('products.get-image');

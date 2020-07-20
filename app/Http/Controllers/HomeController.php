@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = ProductLogic::getSomeOrderByCustom(6, 'created_at', false);
+        $products = ProductLogic::getSomeActiveOrderByCustom(6, 'created_at', false);
 
         //banner izquierdo
         $banner1Title = "Enlaces útiles";
@@ -46,7 +46,8 @@ class HomeController extends Controller
         $banner2Title = "Te puede interesar";
         $banner2Links = [
             ['title' => 'Productos', 'url' => 'products.index'],
-            ['title' => 'Categorías de la tienda', 'url' => 'categories.index']
+            ['title' => 'Categorías de la tienda', 'url' => 'categories.index'],
+            ['title' => 'Productos baratos', 'url' => 'products.cheap']
         ];
 
         return view('home', [

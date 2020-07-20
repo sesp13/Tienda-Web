@@ -179,11 +179,27 @@ class ProductLogic
     /*
         Obtener algunos productos ordenados por una columna especifica
     */
+    public static function getSomeActiveOrderByCustom(int $number, string $column, bool $way = true, int $pagination = null)
+    {
+        $orderWay = $way ? 'asc' : 'desc';
+        if ($pagination != null) {
+            $products = Product::take($number)
+                ->where('active', true)->orderBy($column, $orderWay)
+                ->paginate($pagination);
+        } else {
+            $products = Product::take($number)
+                ->where('active', true)->orderBy($column, $orderWay)
+                ->get()->load('category');
+        }
+
+        return $products;
+    }
+
     public static function getSomeOrderByCustom(int $number, string $column, bool $way = true)
     {
         $orderWay = $way ? 'asc' : 'desc';
         $products = Product::take($number)
-            ->where('active', true)->orderBy($column, $orderWay)
+            ->orderBy($column, $orderWay)
             ->get()->load('category');
 
         return $products;
