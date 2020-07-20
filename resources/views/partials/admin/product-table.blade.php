@@ -29,9 +29,11 @@
         <td class="bg-danger text-white text-center border border-white rounded">No</td>
         @endif
         <td class="p-table-buttons">
+            @if($tableComplex)
             <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning">
                 <i class="fa fa-pencil"></i> Editar
             </a>
+            @endif
             <!-- Modal de información -->
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalProductView-{{ $product->id }}">
                 <i class="fa fa-eye"></i> Ver Detalles
@@ -88,7 +90,7 @@
                     </div>
                 </div>
             </div>
-
+            @if($tableComplex)
             <!-- Modal de eliminación -->
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalProductDelete-{{ $product->id }}">
                 <i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar
@@ -117,6 +119,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </td>
     </tr>
     @endforeach

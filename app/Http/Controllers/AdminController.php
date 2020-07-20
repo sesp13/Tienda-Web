@@ -330,6 +330,7 @@ class AdminController extends Controller
             'products' => $products,
             'searchMessage' => 'Buscar productos',
             'searchUrl' => 'admin.products.load-search',
+            'tableComplex' => true,
             'search' => '',
             'banner1Title' => $banner1Title,
             'banner1Links' => $banner1Links,
@@ -377,7 +378,8 @@ class AdminController extends Controller
 
         return view('admin.products.products-search', [
             'products' => $products,
-            'search' => $search
+            'search' => $search,
+            'tableComplex' => true
         ]);
     }
 
@@ -465,6 +467,7 @@ class AdminController extends Controller
             'products' => $products,
             'sectionTitle' => "Productos más costosos",
             'pageTitle' => "Productos más costosos",
+            "tableComplex" => false,
             'search' => ""
         ]);
     }
