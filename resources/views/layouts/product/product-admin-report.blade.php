@@ -28,7 +28,7 @@
                     {{ $products->links() }}
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('admin.index') }}">Volver al panel de administrador</a>
+                    <a href="{{ route('admin.products') }}">Volver al panel de productos</a>
                 </div>
             </div>
         </div>

@@ -318,7 +318,8 @@ class AdminController extends Controller
         //Propiedades para los banners inferiores
         $banner1Title = "Enlaces útiles";
         $banner1Links = [
-            ['title' => "Productos más costosos", 'url' => 'admin.products-expensive']
+            ['title' => "Productos más costosos", 'url' => 'admin.products-expensive'],
+            ['title' => "Productos más baratos", 'url' => 'admin.products-cheap']
         ];
 
         $banner2Title = "Te puede interesar";
@@ -459,7 +460,7 @@ class AdminController extends Controller
 
     //REPORTES DE PRODUCTOS
 
-    public function getProductsByPrice()
+    public function productsExpensive()
     {
         $products = ProductLogic::getAllOrderByCustom('price', false, 10);
 
@@ -467,6 +468,19 @@ class AdminController extends Controller
             'products' => $products,
             'sectionTitle' => "Productos más costosos",
             'pageTitle' => "Productos más costosos",
+            "tableComplex" => false,
+            'search' => ""
+        ]);
+    }
+
+    public function productsCheap()
+    {
+        $products = ProductLogic::getAllOrderByCustom('price', true, 10);
+
+        return view('layouts.product.product-admin-report', [
+            'products' => $products,
+            'sectionTitle' => "Productos más baratos",
+            'pageTitle' => "Productos más baratos",
             "tableComplex" => false,
             'search' => ""
         ]);

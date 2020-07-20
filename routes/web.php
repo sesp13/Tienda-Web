@@ -62,7 +62,8 @@ Route::get('/admin/eliminar-producto/{id}', 'AdminController@productDelete')->na
 
 
 //Rutas de reporte de productos para administradores
-Route::get('/admin/productos/productos-costosos', 'AdminController@getProductsByPrice')->name('admin.products-expensive');
+Route::get('/admin/productos/productos-costosos', 'AdminController@productsExpensive')->name('admin.products-expensive');
+Route::get('/admin/productos/productos-baratos', 'AdminController@productsCheap')->name('admin.products-cheap');
 
 //Rutas de Usuarios
 Route::get('/confirmar-contraseña/{token}', "UserController@confirm")->name('user.confirm');
