@@ -53,13 +53,16 @@ Route::get('/admin/productos', 'AdminController@products')->name('admin.products
 Route::get('admin/productos/cambiar-estado/{id}/{search?}', 'AdminController@changeProductState')
 ->name('admin.product.change-state');
 Route::post('/admin/productos/buscar', 'AdminController@loadProductSearch')->name('admin.products.load-search');
-Route::get('/admin/productos/{search}', 'AdminController@productSearch')->name('admin.products.search');
+Route::get('/admin/productos/buscar/{search}', 'AdminController@productSearch')->name('admin.products.search');
 Route::get('/admin/crear-producto', 'AdminController@productCreate')->name('admin.products.create');
 Route::post('/admin/crear-producto', 'AdminController@productStore')->name('admin.products.store');
 Route::get('/admin/editar-producto/{id}', 'AdminController@productEdit')->name('admin.products.edit');
 Route::post('/admin/editar-producto', 'AdminController@productUpdate')->name('admin.products.update');
 Route::get('/admin/eliminar-producto/{id}', 'AdminController@productDelete')->name('admin.products.delete');
 
+
+//Rutas de reporte de productos para administradores
+Route::get('/admin/productos/productos-costosos', 'AdminController@getProductsByPrice')->name('admin.products-expensive');
 
 //Rutas de Usuarios
 Route::get('/confirmar-contraseña/{token}', "UserController@confirm")->name('user.confirm');

@@ -18,10 +18,11 @@
                         <p class="float-left">Total de productos en esta página: {{ count($products) }}</p>
                         <!-- <form action="" class="ml-3 form-inline float-left">
                         <div class="form-group">
+                            <label for="" class="mr-3">Ordenar productos por</label>
                             <select name="" id="" class="form-control">
-                                <option value="">Por precio</option>
-                                <option value="">Por marca</option>
-                                <option value="">Por imagen</option>
+                                <option value="">Precio</option>
+                                <option value="">Fecha de creación</option>
+                                <option value="">Fecha de actualización</option>
                             </select>
                         </div>
                             <input type="submit" class="ml-3 btn btn-success" value="Aplicar">

@@ -1,3 +1,9 @@
+<?php 
+    /*
+        Se requiere
+        $products: array de productos
+    */
+?> 
 <table class="table table-border table-striped p-table">
     <thead class="thead-dark">
         <tr>

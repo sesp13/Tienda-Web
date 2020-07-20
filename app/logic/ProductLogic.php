@@ -176,6 +176,9 @@ class ProductLogic
         return $products;
     }
 
+    /*
+        Obtener algunos productos ordenados por una columna especifica
+    */
     public static function getSomeOrderByCustom(int $number, string $column, bool $way = true)
     {
         $orderWay = $way ? 'asc' : 'desc';

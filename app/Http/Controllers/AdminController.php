@@ -266,7 +266,7 @@ class AdminController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', "unique:categories,name," . $category->id]
         ]);
-        
+
         CategoryLogic::update($category, $data);
 
         return redirect()->route('admin.categories')->with('message', "La categoría  {$category->name} ha sido actualizada correctamente");
@@ -317,7 +317,9 @@ class AdminController extends Controller
 
         //Propiedades para los banners inferiores
         $banner1Title = "Enlaces útiles";
-        $banner1Links = [];
+        $banner1Links = [
+            ['title' => "Productos más costosos", 'url' => 'admin.products-expensive']
+        ];
 
         $banner2Title = "Te puede interesar";
         $banner2Links = [
@@ -449,7 +451,21 @@ class AdminController extends Controller
     public function productDelete(int $id)
     {
         $product = ProductLogic::delete($id);
-        
+
         return redirect()->route('admin.products')->with('message', "El producto {$product->name} ha sido eliminado correctamente");
+    }
+
+    //REPORTES DE PRODUCTOS
+
+    public function getProductsByPrice()
+    {
+        $products = ProductLogic::getAllOrderByCustom('price', false, 10);
+
+        return view('layouts.product.product-admin-report', [
+            'products' => $products,
+            'sectionTitle' => "Productos más costosos",
+            'pageTitle' => "Productos más costosos",
+            'search' => ""
+        ]);
     }
 }
